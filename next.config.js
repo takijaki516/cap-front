@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
+  images: {
+    dangerouslyAllowSVG: true,
+    domains: ["rb.gy", "previews.123rf.com", "cdn.pixabay.com"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,0 +1,45 @@
+[
+  {
+    "id": 1,
+    "title": "sample post title  1 ",
+    "content": "sample post content. sample post content. sample post content. sample post content.sample post content.sample post content.sample post content",
+    "image_src": "https://cdn.pixabay.com/photo/2022/08/22/10/28/tihany-7403355_960_720.jpg",
+    "user_id": "1",
+    "created_at": "mysql.datetime"
+  },
+  {
+    "id": 2,
+    "title": "sample post title  2",
+    "content": "sample post content. sample post content. sample post content. sample post content.sample post content.sample post content.sample post content",
+    "image_src": "https://cdn.pixabay.com/photo/2022/08/22/10/28/tihany-7403355_960_720.jpg",
+    "user_id": "1"
+  },
+  {
+    "id": 3,
+    "title": "sample post title 3",
+    "content": "sample post content. sample post content. sample post content. sample post content.sample post content.sample post content.sample post content",
+    "image_src": "https://cdn.pixabay.com/photo/2022/08/22/10/28/tihany-7403355_960_720.jpg",
+    "user_id": "1"
+  },
+  {
+    "id": 4,
+    "title": "sample post title  4",
+    "content": "sample post content. sample post content. sample post content. sample post content.sample post content.sample post content.sample post content",
+    "image_src": "https://cdn.pixabay.com/photo/2022/08/22/10/28/tihany-7403355_960_720.jpg",
+    "user_id": "1"
+  },
+  {
+    "id": 5,
+    "title": "sample post title  5",
+    "content": "sample post content. sample post content. sample post content. sample post content.sample post content.sample post content.sample post content",
+    "image_src": "https://cdn.pixabay.com/photo/2022/08/22/10/28/tihany-7403355_960_720.jpg",
+    "user_id": "1"
+  },
+  {
+    "id": 6,
+    "title": "sample post title  6",
+    "content": "sample post content. sample post content. sample post content. sample post content.sample post content.sample post content.sample post content",
+    "image_src": "https://cdn.pixabay.com/photo/2022/08/22/10/28/tihany-7403355_960_720.jpg",
+    "user_id": "1"
+  }
+]
