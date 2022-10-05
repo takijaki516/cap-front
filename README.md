@@ -14,3 +14,4 @@
 - recoil (redux 대신 사용)
 - material icon (ui 용)
 - framer motion (ui 용)
+- tailwindcss
