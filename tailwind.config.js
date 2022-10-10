@@ -5,7 +5,20 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        128: "40rem",
+      },
+      gridTemplateColumns: {
+        "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))",
+      },
+    },
+    fontFamily: {
+      raleway: ["Raleway", "sans-serif"],
+    },
+    minHeight: {
+      128: "40rem",
+    },
   },
   plugins: [],
 };

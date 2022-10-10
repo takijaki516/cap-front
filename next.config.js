@@ -4,7 +4,13 @@ const nextConfig = {
   swcMinify: true,
   images: {
     dangerouslyAllowSVG: true,
-    domains: ["rb.gy", "previews.123rf.com", "cdn.pixabay.com"],
+    domains: [
+      "rb.gy",
+      "previews.123rf.com",
+      "cdn.pixabay.com",
+      "seeklogo.com",
+      "images.pexels.com",
+    ],
   },
 };
 

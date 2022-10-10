@@ -1,0 +1,33 @@
+[
+  {
+    "main_name": "의류/잡화/뷰티",
+    "item": [
+      { "item_name": "여성의류" },
+      { "item_name": "남성의류" },
+      { "item_name": "신발" },
+      { "item_name": "가방" },
+      { "item_name": "쥬얼리" },
+      { "item_name": "시계" }
+    ]
+  },
+  {
+    "main_name": "컴퓨터/디지털/가전",
+    "item": [
+      { "item_name": "여성의류" },
+      { "item_name": "노트북&PC" },
+      { "item_name": "PC주변장치" }
+    ]
+  },
+  {
+    "main_name": "유아",
+    "item": [{ "item_name": "장남감" }, { "item_name": "아동의류" }]
+  },
+  {
+    "main_name": "홈테코/취미/반려/문구",
+    "item": [
+      { "item_name": "조명" },
+      { "item_name": "악기" },
+      { "item_name": "문구" }
+    ]
+  }
+]

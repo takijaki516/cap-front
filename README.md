@@ -8,6 +8,7 @@
 
 ## 사용하는 패키지 (추가될수도 있고, 교체 될수도 있음)
 
+- tailwindcss
 - nextjs
 - next-auth(개발용으로만)
 - next-theme(다크모드 할려고 구현 안할수도 있음)

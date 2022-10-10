@@ -7,7 +7,6 @@ import Head from "next/head";
 import Image from "next/image";
 
 import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import user from "../../dummydata/users.json";
 import post from "../../dummydata/posts.json";
 
@@ -22,8 +21,6 @@ const PostPage = () => {
       <Header />
 
       <main className="flex flex-col md:flex-row justify-center  gap-x-5 px-4 sm:px-12">
-        <Sidebar />
-
         <div className="bg-[#1D2226] text-white  space-y-2 py-2.5">
           <div className="flex items-center px-2.5 cursor-pointer">
             <Avatar src={user.image} className="!h-10 !w-10 cursor-pointer" />

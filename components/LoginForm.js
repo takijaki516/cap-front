@@ -1,7 +1,23 @@
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
+
+import baseApi from "../util/baseApi";
 
 const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+
+  const buttonClickHandler = (e) => {
+    e.preventDefault();
+
+    baseApi.post("/user", {
+      email,
+      nickname,
+      password,
+    });
+  };
+
   return (
     <div
       className="relative flex flex-col justify-center
@@ -14,7 +30,7 @@ const LoginForm = () => {
         <form className="mt-6">
           <div className="mb-2">
             <label
-              for="email"
+              htmlFor="email"
               className="block text-sm font-semibold text-gray-800"
             >
               이메일
@@ -22,11 +38,27 @@ const LoginForm = () => {
             <input
               type="email"
               className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-2">
             <label
-              for="password"
+              htmlFor="nickname"
+              className="block text-sm font-semibold text-gray-800"
+            >
+              닉네임
+            </label>
+            <input
+              type="text"
+              className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          </div>
+          <div className="mb-2">
+            <label
+              htmlFor="password"
               className="block text-sm font-semibold text-gray-800"
             >
               비밀번호
@@ -34,11 +66,20 @@ const LoginForm = () => {
             <input
               type="password"
               className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <a href="#" className="text-xs text-purple-600 hover:underline">
             비밀번호 찾기
           </a>
+          {/* 개발용 */}
+          <div
+            className="bg-red-900 text-white p-4"
+            onClick={buttonClickHandler}
+          >
+            ex button
+          </div>
           <div className="mt-6">
             <Link href="/homepage">
               <button className=" w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
