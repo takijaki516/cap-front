@@ -34,7 +34,6 @@ const index = () => {
       <Hero />
       <Input />
 
-      {/* <Sidebar className="grow" /> */}
       {/* <Feed posts={posts} /> */}
       <Grid className="p-4 max-w-7xl m-auto" title="일단 홈페이지">
         {posts.map((post) => (
