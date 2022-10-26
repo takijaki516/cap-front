@@ -1,10 +1,27 @@
 import "../styles/globals.css";
-import { RecoilRoot } from "recoil";
+import {RecoilRoot} from "recoil";
+import {useState} from "react";
+import Axios from "axios"
+import {AuthProvider} from "../context/auth";
 
-function MyApp({ Component, pageProps: { ...pageProps } }) {
+Axios.defaults.baseURL = "http://localhost:5000"
+Axios.defaults.withCredentials = true;
+
+export const fetcher = async (url) => {
+  try {
+    const res = await Axios.get(url);
+    return res.data;
+  } catch (e) {
+    throw e.response.data;
+  }
+};
+
+function MyApp({Component, pageProps: {...pageProps}}) {
   return (
     <RecoilRoot>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </RecoilRoot>
   );
 }
