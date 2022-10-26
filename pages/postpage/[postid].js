@@ -2,6 +2,7 @@ import { Avatar, IconButton } from "@mui/material";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import Head from "next/head";
 import Image from "next/image";
@@ -12,7 +13,7 @@ import post from "../../dummydata/posts.json";
 
 const PostPage = () => {
   return (
-    <div className="bg-neutral-500 h-screen overflow-y-scroll md:space-y-6 ">
+    <div className="h-screen overflow-y-scroll md:space-y-6 ">
       <Head>
         <title>캡스톤</title>
         <link rel="icon" href="/favicon.ico" />
@@ -20,8 +21,8 @@ const PostPage = () => {
 
       <Header />
 
-      <main className="flex flex-col md:flex-row justify-center  gap-x-5 px-4 sm:px-12">
-        <div className="bg-[#1D2226] text-white  space-y-2 py-2.5">
+      <main className="max-w-fit mx-auto p-8">
+        <div className="bg-[#1D2226] text-white space-y-2 py-2.5 rounded-lg">
           <div className="flex items-center px-2.5 cursor-pointer">
             <Avatar src={user.image} className="!h-10 !w-10 cursor-pointer" />
 
@@ -39,13 +40,15 @@ const PostPage = () => {
 
           <div className="flex-col space-y-2">
             {/* 내용 부분 */}
-            <div className="px-2.5 break-all md:break-normal ">
-              <p>{post[0].content}</p>
-            </div>
+            <div className="flex">
+              <div className="px-2.5 max-w-2xl">
+                <p>{post[0].content}</p>
+              </div>
 
-            {/* 사진 */}
-            <div className="relative h-60">
-              <Image src={post[0].image_src} layout="fill" />
+              {/* 사진 */}
+              <div className="relative h-96 w-96">
+                <Image src={post[0].image_src} layout="fill" />
+              </div>
             </div>
 
             {/* 밑에 버튼 부분 */}
@@ -54,13 +57,13 @@ const PostPage = () => {
                      border-white mx-3 pt-2"
             >
               <button className="postButton">
-                <CommentOutlinedIcon />
-                <h4>댓글</h4>
+                <FavoriteIcon />
+                <h4>좋아요</h4>
               </button>
 
               <button className="postButton ">
                 <DeleteRoundedIcon />
-                <h4>삭제/공유(구현)</h4>
+                <h4></h4>
               </button>
             </div>
           </div>

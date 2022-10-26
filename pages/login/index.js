@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import baseApi from "../../util/baseApi";
@@ -26,6 +25,11 @@ const index = () => {
     router.push("/");
   };
 
+  const registerClickHandler = (e) => {
+    e.preventDefault();
+    router.push("/register");
+  };
+
   useEffect(() => {
     if (
       password.length !== 0 &&
@@ -50,7 +54,7 @@ const index = () => {
           <a href="/">
             <h3 className="text-4xl font-bold text-purple-600">Logo</h3>
             <h3 className="text-4xl font-bold text-purple-600">
-              회원가입 페이지
+              로그인 페이지
             </h3>
           </a>
         </div>
@@ -131,20 +135,17 @@ const index = () => {
               />
             </div>
             <div className="flex items-center justify-end mt-4">
-              <Link
-                className="text-sm text-gray-600 underline hover:text-gray-900"
-                href="/login"
-              >
-                이미 회원? 로그인 페이지로 가기
-              </Link>
               <button
                 type="submit"
-                className="inline-flex items-center px-5 py-2 ml-4 
+                className="inline-flex items-center px-5 py-2 mr-4 
                 text-xs font-semibold  text-white rounded-md bg-gray-900"
-                disabled={!match}
+                onClick={registerClickHandler}
               >
-                회원가입
+                회원가입하기
               </button>
+              <a className="text-sm  hover:text-gray-900" href="#">
+                로그인
+              </a>
             </div>
           </form>
         </div>

@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 
 import user from "../dummydata/users.json";
 
-const Input = () => {
+const Input = ({ className }) => {
   const router = useRouter();
 
   return (
-    <div>
+    <div className={className}>
       <div className="flex items-center space-x-2">
         <Avatar src={user.image} className="h-10 w-10 cursor-pointer" />
         <motion.button
