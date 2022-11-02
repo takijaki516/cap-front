@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Axios from "axios";
 
 import { useAuthState } from "../../context/auth";
 
@@ -12,9 +13,20 @@ import Card from "../../components/Card";
 import posts from "../../dummydata/posts.json";
 import Hero from "../../components/Hero";
 import { useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const index = () => {
   const { userEmail, setUserEmail } = useAuthState();
+
+  const queryClient = useQueryClient();
+
+  const { isLoading, isError, data, error, isSuccess } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const data = await Axios.get("https://dummyjson.com/products");
+      return data;
+    },
+  });
 
   useEffect(() => {
     const storageData = localStorage.getItem("auth");
@@ -35,7 +47,11 @@ const index = () => {
     );
   }
 
-  if (!!userEmail) {
+  if (!isSuccess) {
+    return <p>loading...</p>;
+  }
+
+  if (!!userEmail && isSuccess) {
     return (
       <div className="bg-[#F3F2EF] h-screen overflow-y-scroll md:space-y-6">
         <Head>
@@ -48,10 +64,10 @@ const index = () => {
         <Input className="p-4 max-w-7xl m-auto" />
 
         <Grid className="p-4 max-w-7xl m-auto" title="전체 상품">
-          {posts.map((post) => (
+          {data.data.products.map((post) => (
             <Link key={post.id} href={`/postpage/${post.id}`}>
               <div className="cursor-pointer hover:opacity-80 duration-300">
-                <Card imgUrl={post.image_src} title={post.title} />
+                <Card imgUrl={post.images[0]} title={post.title} />
               </div>
             </Link>
           ))}

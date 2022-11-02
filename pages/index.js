@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Axios from "axios";
 import { useRouter } from "next/router";
 import { useAuthState } from "../context/auth";
+import { useEffect } from "react";
 
 export default function Home() {
   // react hook form
@@ -19,11 +20,29 @@ export default function Home() {
   const router = useRouter();
   const { userEmail, setUserEmail } = useAuthState();
 
+  useEffect(() => {
+    const storageData = localStorage.getItem("auth");
+    if (!!storageData) {
+      const emailData = JSON.parse(storageData).email;
+      console.log(emailData);
+      setUserEmail(emailData);
+    } else {
+      setUserEmail("");
+    }
+  }, []);
+
+  // localstorage의 세션 확인
+  useEffect(() => {
+    if (!!userEmail) {
+      router.push("/homepage");
+    }
+  }, [userEmail]);
+
   const onSubmit = async (data, e) => {
     e.preventDefault();
 
     try {
-      const res = await Axios.post("/api/auth/login", {
+      const res = await Axios.post("http://localhost:8800/api/auth/login", {
         email: data.email,
         password: data.password,
       });
@@ -34,9 +53,8 @@ export default function Home() {
           JSON.stringify({ ...res.data, email: data.email })
         );
         setUserEmail(data.email);
-        reset();
         router.push("/homepage");
-        return;
+        reset();
       } else {
         alert("다시 로그인 해주세요");
       }

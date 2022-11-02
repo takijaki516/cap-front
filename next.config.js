@@ -10,6 +10,7 @@ const nextConfig = {
       "cdn.pixabay.com",
       "seeklogo.com",
       "images.pexels.com",
+      "dummyjson.com",
     ],
   },
 };

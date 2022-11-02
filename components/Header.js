@@ -27,7 +27,6 @@ function Header() {
       </Link>
 
       {/* right */}
-
       <div className="flex items-center space-x-6">
         <HeaderLink Icon={ChatIcon} text="내게시글" feed linkUrl="/mypost/1" />
         <HeaderLink Icon={ChatIcon} text="쪽지" feed />
@@ -40,8 +39,6 @@ function Header() {
           linkUrl="/dashboard/1"
         />
         <HeaderLink Icon={Avatar} text="로그아웃" feed avatar />
-
-        {/* 다크 모드 할까???*/}
       </div>
     </header>
   );

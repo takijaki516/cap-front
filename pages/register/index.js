@@ -2,9 +2,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
+import { useEffect } from "react";
+import { useAuthState } from "../../context/auth";
 
 const index = () => {
   const router = useRouter();
+  const { userEmail, setUserEmail } = useAuthState();
 
   const {
     register,
@@ -13,21 +16,36 @@ const index = () => {
     reset,
   } = useForm();
 
+  // localstorage의 세션 확인1
+  useEffect(() => {
+    const storageData = localStorage.getItem("auth");
+    if (!!storageData) {
+      const emailData = JSON.parse(storageData).email;
+      console.log(emailData);
+      setUserEmail(emailData);
+    } else {
+      setUserEmail("");
+    }
+  }, []);
+  // localstorage의 세션 확인2
+  useEffect(() => {
+    if (!!userEmail) {
+      router.push("/homepage");
+    }
+  }, [userEmail]);
+
   const onSubmit = async (data, e) => {
     e.preventDefault();
-
     console.log(data);
 
     try {
-      const res = await Axios.post("/api/auth/register", {
+      const res = await Axios.post("http://localhost:8800/api/auth/register", {
         email: data.email,
         username: data.username,
         name: data.name,
         password: data.password,
       });
-
       console.log(res.data);
-
       router.push("/");
     } catch (err) {
       console.log(err);
@@ -37,17 +55,11 @@ const index = () => {
   };
 
   return (
-    <div className="relative top-44">
-      <div
-        className="flex flex-col items-center min-h-screen pt-6 sm:justify-center 
-    sm:pt-0 "
-      >
-        <div>
+    <div className="h-screen bg-[url('/index_pic.jpg')] bg-[length:500px_500px] opacity-75 ">
+      <div className="flex flex-col items-center min-w-fit  sm:pt-0 ">
+        <div className="mt-36">
           <a href="/">
-            <h3 className="text-4xl font-bold text-purple-600">Logo</h3>
-            <h3 className="text-4xl font-bold text-purple-600">
-              회원가입 페이지
-            </h3>
+            <h3 className="text-4xl font-bold">회원가입</h3>
           </a>
         </div>
 
