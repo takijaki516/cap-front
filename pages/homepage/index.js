@@ -1,12 +1,8 @@
 import Head from "next/head";
-import {useRouter} from "next/router";
-import {useRecoilState} from "recoil";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
-import {useAuthState} from "../../context/auth";
-
-
-import {modalState, modalTypeState} from "../../atoms/modalAtom";
+import { useAuthState } from "../../context/auth";
 
 import Header from "../../components/Header";
 import Input from "../../components/Input";
@@ -15,46 +11,47 @@ import Card from "../../components/Card";
 
 import posts from "../../dummydata/posts.json";
 import Hero from "../../components/Hero";
+import { useEffect } from "react";
 
 const index = () => {
-  const [modalOpen, setModalOpen] = useRecoilState(modalState);
-  const [modalType, setModalType] = useRecoilState(modalTypeState);
-  const router = useRouter();
-  const {authenticated, loading, user} = useAuthState();
+  const { userEmail, setUserEmail } = useAuthState();
 
+  useEffect(() => {
+    const storageData = localStorage.getItem("auth");
+    if (!!storageData) {
+      const emailData = JSON.parse(storageData).email;
+      console.log(emailData);
+      setUserEmail(emailData);
+    } else {
+      setUserEmail("");
+    }
+  }, []);
 
-  const loginButtonHandler = (e) => {
-    router.push('/');
-  }
-
-
-  if (!authenticated) {
+  if (!userEmail) {
     return (
-      <div onClick={loginButtonHandler}>
-
-        로그인해주세요
+      <div>
+        <Link href="/">로그인 해주세요</Link>
       </div>
-    )
+    );
   }
 
-  if (authenticated) {
+  if (!!userEmail) {
     return (
       <div className="bg-[#F3F2EF] h-screen overflow-y-scroll md:space-y-6">
         <Head>
           <title>캡스톤</title>
-          <link rel="icon" href="/favicon.ico"/>
         </Head>
 
-        <Header/>
+        <Header />
 
-        <Hero/>
-        <Input className="p-4 max-w-7xl m-auto"/>
+        <Hero />
+        <Input className="p-4 max-w-7xl m-auto" />
 
-        <Grid className="p-4 max-w-7xl m-auto" title="일단 홈페이지">
+        <Grid className="p-4 max-w-7xl m-auto" title="전체 상품">
           {posts.map((post) => (
             <Link key={post.id} href={`/postpage/${post.id}`}>
               <div className="cursor-pointer hover:opacity-80 duration-300">
-                <Card imgUrl={post.image_src} title={post.title}/>
+                <Card imgUrl={post.image_src} title={post.title} />
               </div>
             </Link>
           ))}
@@ -62,8 +59,6 @@ const index = () => {
       </div>
     );
   }
-
-
 };
 
 export default index;

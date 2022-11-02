@@ -10,7 +10,7 @@ module.exports = {
         128: "40rem",
       },
       gridTemplateColumns: {
-        "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))",
+        "auto-fill": "repeat(auto-fill, minmax(450px, 1fr))",
       },
     },
     fontFamily: {

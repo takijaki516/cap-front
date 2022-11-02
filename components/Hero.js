@@ -8,10 +8,8 @@ const Hero = () => {
       m-auto z-10 pb-12 text-center md:text-left md:pl-10"
       >
         <div className="text-white max-w-2xl px-4">
-          <h2 className="text-2xl md:text-5xl font-bold pb-8">안녕하세요</h2>
-          <p className="text-lg md:text-xl">
-            안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-          </p>
+          <h2 className="text-2xl md:text-5xl font-bold pb-8">렌트허브</h2>
+          <p className="text-lg md:text-xl">렌트허브 입니다..............</p>
         </div>
       </div>
       <Image
@@ -19,7 +17,7 @@ const Hero = () => {
         objectFit="cover"
         objectPosition="center"
         layout="fill"
-        src="https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        src="/index_pic.jpg"
         alt="hero-image"
       />
     </div>

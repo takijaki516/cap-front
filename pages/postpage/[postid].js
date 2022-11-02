@@ -27,7 +27,6 @@ const PostPage = () => {
             <Avatar src={user.image} className="!h-10 !w-10 cursor-pointer" />
 
             <div className="mr-auto ml-2">
-              <h6>{user.nickname}</h6>
               <p>{user.email}</p>
             </div>
 

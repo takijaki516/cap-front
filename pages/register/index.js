@@ -1,44 +1,40 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
-import baseApi from "../../util/baseApi";
+import { useForm } from "react-hook-form";
+import Axios from "axios";
 
 const index = () => {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
-  const [checkPassword, setCheckPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const [match, setMatch] = useState(false);
-
-  const submitHandler = (e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
 
-    baseApi.post("/user", {
-      email,
-      nickname,
-      password,
-    });
+    console.log(data);
 
-    router.push("/");
-  };
+    try {
+      const res = await Axios.post("/api/auth/register", {
+        email: data.email,
+        username: data.username,
+        name: data.name,
+        password: data.password,
+      });
 
-  useEffect(() => {
-    if (
-      password.length !== 0 &&
-      checkPassword.length !== 0 &&
-      password === checkPassword
-    ) {
-      setMatch(true);
-    } else {
-      setMatch(false);
+      console.log(res.data);
+
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      reset();
     }
-  }, [password, checkPassword]);
-
-  console.log(match);
+  };
 
   return (
     <div className="relative top-44">
@@ -59,92 +55,79 @@ const index = () => {
           className="w-full px-6 py-4 mt-6 overflow-hidden 
         bg-white shadow-md sm:max-w-md sm:rounded-lg"
         >
-          <form onSubmit={submitHandler}>
-            <div className="my-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 undefined"
-              >
-                이메일
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="block w-full mt-1  border-2 border-slate-100 hover:border-slate-400 
-                focus:outline-none rounded-md text-lg "
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 undefined"
-              >
-                닉네임
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                className="block w-full mt-1 border-2 border-slate-100 hover:border-slate-400 
-                focus:outline-none rounded-md text-lg"
-              />
-            </div>
-            <div className="mt-4">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700 undefined"
-              >
-                비밀번호
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={`block w-full mt-1 border-2  rounded-md text-lg ${
-                  match
-                    ? "border-slate-100 hover:border-slate-400 focus:outline-none"
-                    : "border-red-500 hover:border-red-500 focus:outline-none "
-                }`}
-              />
-            </div>
-            <div className="mt-4">
-              <label
-                htmlFor="password_confirmation"
-                className="block text-sm font-medium text-gray-700 undefined"
-              >
-                비밀번호 재입력
-              </label>
-              <input
-                type="password"
-                name="password_confirmation"
-                value={checkPassword}
-                onChange={(e) => setCheckPassword(e.target.value)}
-                className={`block w-full mt-1 border-2  rounded-md text-lg ${
-                  match
-                    ? "border-slate-100 hover:border-slate-400 focus:outline-none"
-                    : "border-red-500 hover:border-red-500 focus:outline-none "
-                }`}
-              />
-            </div>
-            <div className="flex items-center justify-end mt-4">
-              <Link
-                className="text-sm text-gray-600 underline hover:text-gray-900"
-                href="/login"
-              >
-                이미 회원? 로그인 페이지로 가기
-              </Link>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex-col flex justify-center"
+          >
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-800"
+            >
+              이메일
+            </label>
+            <input
+              type="email"
+              {...register("email", { required: true })}
+              className="border-2 border-gray-300 rounded-sm"
+            />
+
+            <label
+              htmlFor="username"
+              className="block text-sm font-semibold text-gray-800 "
+            >
+              닉네임
+            </label>
+            <input
+              type="text"
+              {...register("username", { required: true })}
+              className="border-2 border-gray-300 rounded-sm"
+            />
+            {errors.username && <span>유저네임</span>}
+
+            <label
+              htmlFor="name"
+              className="block text-sm font-semibold text-gray-800 "
+            >
+              이름
+            </label>
+            <input
+              type="text"
+              {...register("name", { required: true })}
+              className="border-2 border-gray-300 rounded-sm"
+            />
+            {errors.username && <span>이름</span>}
+
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-800 "
+            >
+              비밀번호
+            </label>
+            <input
+              {...register("password", { required: true })}
+              type="password"
+              className="border-2 border-gray-300 rounded-sm "
+            />
+            {errors.password && <span>비밀번호</span>}
+
+            <div className="flex justify-between mt-6">
               <button
+                className="p-1 px-2 space-x-2 text- font-bold border-2
+                        border-gray-400 w-fit rounded-md
+                        cursor-pointer hover:border-blue-300 transition"
                 type="submit"
-                className="inline-flex items-center px-5 py-2 ml-4 
-                text-xs font-semibold  text-white rounded-md bg-gray-900"
-                disabled={!match}
               >
-                회원가입
+                회원가입 하기
               </button>
+
+              <div
+                className="p-1 px-2 space-x-2 text- font-bold border-2
+                        border-gray-400 w-fit rounded-md
+                        cursor-pointer hover:border-blue-300 transition"
+                type="submit"
+              >
+                <Link href="/">로그인하기</Link>
+              </div>
             </div>
           </form>
         </div>

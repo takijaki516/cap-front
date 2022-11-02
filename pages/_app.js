@@ -1,10 +1,10 @@
 import "../styles/globals.css";
-import {RecoilRoot} from "recoil";
-import {useState} from "react";
-import Axios from "axios"
-import {AuthProvider} from "../context/auth";
+import { RecoilRoot } from "recoil";
+import Axios from "axios";
+import { AuthProvider, useAuthState } from "../context/auth";
+import { useEffect } from "react";
 
-Axios.defaults.baseURL = "http://localhost:5000"
+Axios.defaults.baseURL = "http://localhost:8800";
 Axios.defaults.withCredentials = true;
 
 export const fetcher = async (url) => {
@@ -16,7 +16,7 @@ export const fetcher = async (url) => {
   }
 };
 
-function MyApp({Component, pageProps: {...pageProps}}) {
+function MyApp({ Component, pageProps: { ...pageProps } }) {
   return (
     <RecoilRoot>
       <AuthProvider>
