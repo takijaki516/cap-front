@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Axios from "axios";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 import { useAuthState } from "../../context/auth";
 
@@ -10,10 +12,7 @@ import Input from "../../components/Input";
 import Grid from "../../components/Grid";
 import Card from "../../components/Card";
 
-import posts from "../../dummydata/posts.json";
 import Hero from "../../components/Hero";
-import { useEffect } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const index = () => {
   const { userEmail, setUserEmail } = useAuthState();
@@ -65,7 +64,7 @@ const index = () => {
 
         <Grid className="p-4 max-w-7xl m-auto" title="전체 상품">
           {data.data.products.map((post) => (
-            <Link key={post.id} href={`/postpage/${post.id}`}>
+            <Link key={post.id} href={`/board/${post.id}`}>
               <div className="cursor-pointer hover:opacity-80 duration-300">
                 <Card imgUrl={post.images[0]} title={post.title} />
               </div>

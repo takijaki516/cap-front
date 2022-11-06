@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { useAuthState } from "../context/auth";
 
 const HeaderLink = ({ linkUrl, Icon, text, avatar, feed, active, hidden }) => {
+  const { userEmail, setUserEmail } = useAuthState();
+
   // link 가 없을시
   if (!linkUrl)
     return (
