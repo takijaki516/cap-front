@@ -23,23 +23,7 @@ const index = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    cateItems.map((level1) => {
-      level1.item.map((level2) => {
-        if (level2.cate_id === router.query.cateid) {
-          setCategoryName(level2.item_name);
-        }
-      });
-    });
-  }, [router]);
-
-  const { isLoading, isError, data, error, isSuccess } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const data = await Axios.get("https://dummyjson.com/products");
-      return data;
-    },
-  });
+  const cateId = router.query.cateid;
 
   useEffect(() => {
     const storageData = localStorage.getItem("auth");
@@ -51,6 +35,31 @@ const index = () => {
       setUserEmail("");
     }
   }, []);
+
+  useEffect(() => {
+    cateItems.map((level1) => {
+      level1.item.map((level2) => {
+        if (level2.cate_id === cateId) {
+          setCategoryName(level2.item_name);
+        }
+      });
+    });
+  }, [cateId]);
+
+  // query function
+  const getProductByCateQueryFn = async ({ queryKey }) => {
+    const [_key, cateId] = queryKey;
+    const data = await Axios.get(
+      `http://110.12.218.147:8080/api/v1/boards/category?category_id=${cateId}`
+    );
+    return data;
+  };
+
+  const { isLoading, isError, data, error, isSuccess } = useQuery({
+    queryKey: ["boards", cateId],
+    queryFn: getProductByCateQueryFn,
+    enabled: !!cateId,
+  });
 
   if (!userEmail) {
     return (
@@ -65,6 +74,8 @@ const index = () => {
   }
 
   if (!!userEmail && isSuccess) {
+    console.log(data);
+
     return (
       <div className="bg-[#F3F2EF] h-screen overflow-y-scroll md:space-y-6">
         <Head>
@@ -72,19 +83,14 @@ const index = () => {
         </Head>
 
         <Header />
-        {/* 
-        <CategoryName
-          cateName={categoryName}
-          className="p-4 max-w-7xl m-auto"
-        /> */}
 
         <Input className="p-4 max-w-7xl m-auto" />
 
         <Grid className="p-4 max-w-7xl m-auto" title={categoryName}>
-          {data.data.products.map((post) => (
-            <Link key={post.id} href={`/board/${post.id}`}>
+          {data.data.data.map((post) => (
+            <Link key={post.board_id} href={`/board/${post.board_id}`}>
               <div className="cursor-pointer hover:opacity-80 duration-300">
-                <Card imgUrl={post.images[0]} title={post.title} />
+                <Card imgUrl={post.image} title={post.title} />
               </div>
             </Link>
           ))}

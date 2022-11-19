@@ -1,15 +1,13 @@
-import Image from "next/image";
+const Thumb = ({ imgUrl }) => {
+  // const imgSrc = imgUrl.length !== 0 ? imgUrl : "/noimage.jpg";
 
-const Thumb = ({ imgUrl }) => (
-  <Image
-    placeholder="blur"
-    blurDataURL="/placeholder.jpg"
-    className="rounded-lg"
-    layout="fill"
-    objectFit="cover"
-    src={imgUrl}
-    alt="thumb"
-  />
-);
+  return (
+    <img
+      className="rounded-lg object-fill w-full h-full overflow-hidden"
+      src="/no_image.jpg"
+      alt="thumb"
+    />
+  );
+};
 
 export default Thumb;

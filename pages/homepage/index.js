@@ -20,9 +20,9 @@ const index = () => {
   const queryClient = useQueryClient();
 
   const { isLoading, isError, data, error, isSuccess } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["boards"],
     queryFn: async () => {
-      const data = await Axios.get("https://dummyjson.com/products");
+      const data = await Axios.get("http://110.12.218.147:8080/api/v1/boards");
       return data;
     },
   });
@@ -51,6 +51,10 @@ const index = () => {
   }
 
   if (!!userEmail && isSuccess) {
+    console.log(data.data.data);
+  }
+
+  if (!!userEmail && isSuccess) {
     return (
       <div className="bg-[#F3F2EF] h-screen overflow-y-scroll md:space-y-6">
         <Head>
@@ -63,10 +67,10 @@ const index = () => {
         <Input className="p-4 max-w-7xl m-auto" />
 
         <Grid className="p-4 max-w-7xl m-auto" title="전체 상품">
-          {data.data.products.map((post) => (
-            <Link key={post.id} href={`/board/${post.id}`}>
+          {data.data.data.map((post) => (
+            <Link key={post.board_id} href={`/board/${post.board_id}`}>
               <div className="cursor-pointer hover:opacity-80 duration-300">
-                <Card imgUrl={post.images[0]} title={post.title} />
+                <Card imgUrl={post.image} title={post.title} />
               </div>
             </Link>
           ))}
@@ -74,6 +78,7 @@ const index = () => {
       </div>
     );
   }
+  return <div>haha</div>;
 };
 
 export default index;

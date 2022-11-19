@@ -42,10 +42,13 @@ export default function Home() {
     e.preventDefault();
 
     try {
-      const res = await Axios.post("http://localhost:8800/api/auth/login", {
-        email: data.email,
-        password: data.password,
-      });
+      const res = await Axios.post(
+        "http://110.12.218.147:8080/api/v1/user/login",
+        {
+          email: data.email,
+          password: data.password,
+        }
+      );
 
       if (res.data.result === "success") {
         localStorage.setItem(

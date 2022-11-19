@@ -39,12 +39,14 @@ const index = () => {
     console.log(data);
 
     try {
-      const res = await Axios.post("http://localhost:8800/api/auth/register", {
-        email: data.email,
-        username: data.username,
-        name: data.name,
-        password: data.password,
-      });
+      const res = await Axios.post(
+        "http://110.12.218.147:8080/api/v1/user/register",
+        {
+          email: data.email,
+          username: data.username,
+          password: data.password,
+        }
+      );
       console.log(res.data);
       router.push("/");
     } catch (err) {
@@ -95,19 +97,6 @@ const index = () => {
               className="border-2 border-gray-300 rounded-sm"
             />
             {errors.username && <span>유저네임</span>}
-
-            <label
-              htmlFor="name"
-              className="block text-sm font-semibold text-gray-800 "
-            >
-              이름
-            </label>
-            <input
-              type="text"
-              {...register("name", { required: true })}
-              className="border-2 border-gray-300 rounded-sm"
-            />
-            {errors.username && <span>이름</span>}
 
             <label
               htmlFor="password"

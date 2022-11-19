@@ -1,7 +1,6 @@
 import Image from "next/image";
 import ChatIcon from "@mui/icons-material/Chat";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Avatar } from "@mui/material";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "next/link";
 
@@ -35,14 +34,19 @@ function Header() {
           feed
           linkUrl="/user/post/2"
         />
-        <HeaderLink Icon={NotificationsIcon} text="알림" feed />
         <HeaderLink
+          Icon={MailOutlineIcon}
+          text="쪽지함"
+          feed
+          linkUrl="/dashboard/"
+        />
+        {/* <HeaderLink
           Icon={Avatar}
           text="회원정보"
           feed
           avatar
           linkUrl="/dashboard/"
-        />
+        /> */}
         <HeaderLink Icon={LogoutIcon} text="로그아웃" feed avatar />
       </div>
     </header>

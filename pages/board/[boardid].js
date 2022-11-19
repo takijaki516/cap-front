@@ -3,39 +3,52 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useAuthState } from "../../context/auth";
+import { useModalState } from "../../context/modalContext";
+
+import Header from "../../components/Header";
 import SingleBoard from "../../components/SingleBoard";
+import Modal from "../../components/Modal";
 
 const SingleBoardPage = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  console.log("router", router.query.boardid);
+  const [token, setToken] = useState("");
+
+  const { userEmail, setUserEmail } = useAuthState();
+  const { modalState } = useModalState();
 
   const boardId = router.query.boardid;
 
-  const { userEmail, setUserEmail } = useAuthState();
-
-  const { isLoading, isError, data, error, isSuccess } = useQuery({
-    queryKey: ["singleProduct", boardId],
-    queryFn: async () => {
-      const data = await Axios.get(`https://dummyjson.com/products/${boardId}`);
-      return data;
-    },
-  });
-
-  console.log("data", data);
-
   useEffect(() => {
     const storageData = localStorage.getItem("auth");
+    setToken(localStorage.getItem("auth").data);
+
     if (!!storageData) {
       const emailData = JSON.parse(storageData).email;
+      console.log(emailData);
       setUserEmail(emailData);
     } else {
       setUserEmail("");
     }
   }, []);
+
+  // react query
+  const getBoardByIdFn = async ({ queryKey }) => {
+    const [_key, boardId] = queryKey;
+    const data = await Axios.get(
+      `http://110.12.218.147:8080/api/v1/board?board_id=${boardId}`
+    );
+    return data;
+  };
+
+  const { isLoading, isError, data, error, isSuccess } = useQuery({
+    queryKey: ["board", boardId],
+    queryFn: getBoardByIdFn,
+    enabled: !!boardId,
+  });
 
   if (!userEmail) {
     return (
@@ -49,11 +62,22 @@ const SingleBoardPage = () => {
     return <p>loading...</p>;
   }
 
-  return (
-    <div>
-      <SingleBoard data={data.data} />
-    </div>
-  );
+  if (!!userEmail && isSuccess) {
+    return (
+      <div>
+        <Head>
+          <title>보드</title>
+        </Head>
+
+        <Header />
+        <div className="w-5/6 mx-auto">
+          <SingleBoard data={data.data.data} />
+          {/*  쪽지 receiver email을 알지 못한다. */}
+          <Modal boardOwner={data.data.data} token={token} />
+        </div>
+      </div>
+    );
+  }
 };
 
 export default SingleBoardPage;

@@ -16,6 +16,7 @@ function Form() {
     console.log(data);
   };
 
+  // 이미지는 어떻게 하지??
   useEffect(() => {
     if (watchImageUpload && watchImageUpload.length > 0) {
       const file = watchImageUpload[0];
