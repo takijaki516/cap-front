@@ -24,14 +24,15 @@ const SingleBoardPage = () => {
 
   useEffect(() => {
     const storageData = localStorage.getItem("auth");
-    setToken(localStorage.getItem("auth").data);
 
     if (!!storageData) {
-      const emailData = JSON.parse(storageData).email;
-      console.log(emailData);
-      setUserEmail(emailData);
+      const parsedData = JSON.parse(storageData);
+      console.log(parsedData);
+      setToken(parsedData.data);
+      setUserEmail(parsedData.email);
     } else {
       setUserEmail("");
+      setToken("");
     }
   }, []);
 

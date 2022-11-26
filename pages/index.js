@@ -41,14 +41,38 @@ export default function Home() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
 
+    const url = "http://110.12.218.147:8080/api/v1/user/login";
+
+    data = {
+      email: data.email,
+      password: data.password,
+    };
+
     try {
       const res = await Axios.post(
-        "http://110.12.218.147:8080/api/v1/user/login",
+        url,
         {
           email: data.email,
           password: data.password,
+        },
+        {
+          withCredentials: true,
         }
       );
+
+      // const res = await fetch(url, {
+      //   method: "POST", // *GET, POST, PUT, DELETE, etc.
+      //   mode: "cors", // no-cors, *cors, same-origin
+      //   // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      //   credentials: "same-origin", // include, *same-origin, omit
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     // "Content-Type": "application/x-www-form-urlencoded",
+      //   },
+      //   // redirect: 'follow', // manual, *follow, error
+      //   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      //   body: JSON.stringify(data), // body data type must match "Content-Type" header
+      // });
 
       if (res.data.result === "success") {
         localStorage.setItem(

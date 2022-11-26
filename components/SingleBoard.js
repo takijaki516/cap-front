@@ -1,13 +1,60 @@
 import Moment from "react-moment";
 import "moment/locale/ko";
+import Axios from "axios";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import { useModalState } from "../context/modalContext";
+import { useAuthState } from "../context/auth";
 
 const SingleBoard = ({ data }) => {
   const { modalState, setModalState } = useModalState();
+  const { userEmail } = useAuthState();
+  const router = useRouter();
+  const [token, setToken] = useState("");
 
   const msgBtnHandler = (e) => {
     setModalState((prev) => !prev);
+  };
+
+  // token 확인
+  useEffect(() => {
+    const storageData = localStorage.getItem("auth");
+    if (!!storageData) {
+      const tokenData = JSON.parse(storageData).data;
+      setToken(tokenData);
+    } else {
+      setToken("");
+    }
+  }, []);
+
+  const url = `http://110.12.218.147:8080/api/v1/board/delete?board_id=${data.board_id}`;
+
+  // 확인
+  const deleteBtnHandler = async (data) => {
+    try {
+      const res = await Axios.post(
+        url,
+        {},
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (res.data.result === "success") {
+        router.push("/homepage");
+      } else {
+        alert("다시 로그인 해주세요");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("success");
+    }
   };
 
   return (
@@ -46,20 +93,24 @@ const SingleBoard = ({ data }) => {
         </div>
 
         <div className="mt-6 flex justify-around">
-          <div
-            className="bg-sky-400 hover:bg-sky-500 text-white font-bold transition
-          rounded-md px-10  py-3 cursor-pointer"
-            onClick={msgBtnHandler}
-          >
-            쪽지보내기
-          </div>
           {/* 여기서 삭제 버튼은 자기 자신 게시물 일때만 보여주기 */}
-          <div
-            className="bg-red-500 hover:bg-red-600 text-white font-bold transition
+          {data.email === userEmail ? (
+            <div
+              className="bg-red-500 hover:bg-red-600 text-white font-bold transition
           rounded-md px-10  py-3 cursor-pointer"
-          >
-            삭제
-          </div>
+              onClick={deleteBtnHandler}
+            >
+              삭제
+            </div>
+          ) : (
+            <div
+              className="bg-sky-400 hover:bg-sky-500 text-white font-bold transition
+          rounded-md px-10  py-3 cursor-pointer"
+              onClick={msgBtnHandler}
+            >
+              쪽지보내기
+            </div>
+          )}
         </div>
       </div>
     </div>

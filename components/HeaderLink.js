@@ -1,23 +1,27 @@
 import React from "react";
 import Link from "next/link";
-import { useAuthState } from "../context/auth";
+import { useRouter } from "next/router";
 
-const HeaderLink = ({ linkUrl, Icon, text, avatar, feed, active, hidden }) => {
-  const { userEmail, setUserEmail } = useAuthState();
+const HeaderLink = ({ linkUrl, Icon, text, feed, active, hidden }) => {
+  const router = useRouter();
+
+  const logoutHandler = () => {
+    localStorage.removeItem("auth");
+    router.push("/");
+  };
 
   // link 가 없을시
   if (!linkUrl)
     return (
       <div
-        className={`${
-          hidden && "hidden md:inline-flex"
-        } cursor-pointer flex flex-col justify-center items-center ${
+        className={`cursor-pointer flex flex-col justify-center items-center ${
           feed
             ? "text-black/60 hover:text-black dark:text-white/75 dark:hover:text-white lg:-mb-1.5 space-y-1"
             : "text-gray-500 hover:text-gray-700"
-        } ${active && "!text-black dark:!text-white"}`}
+        }`}
+        onClick={logoutHandler}
       >
-        {avatar ? <Icon className="!h-7 !w-7 lg:!-mb-1" /> : <Icon />}
+        <Icon />
 
         <h4
           className={`text-sm ${
@@ -39,16 +43,13 @@ const HeaderLink = ({ linkUrl, Icon, text, avatar, feed, active, hidden }) => {
   return (
     <Link href={linkUrl}>
       <div
-        className={`${
-          hidden && "hidden md:inline-flex"
-        } cursor-pointer flex flex-col justify-center items-center ${
+        className={`cursor-pointer flex flex-col justify-center items-center ${
           feed
             ? "text-black/60 hover:text-black dark:text-white/75 dark:hover:text-white lg:-mb-1.5 space-y-1"
             : "text-gray-500 hover:text-gray-700"
-        } ${active && "!text-black dark:!text-white"}`}
+        }`}
       >
-        {avatar ? <Icon className="!h-7 !w-7 lg:!-mb-1" /> : <Icon />}
-
+        <Icon />
         <h4
           className={`text-sm ${
             feed && "hidden lg:flex justify-center w-full mx-auto"

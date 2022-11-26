@@ -1,22 +1,53 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
+import { useRouter } from "next/router";
 
 import { useModalState } from "../context/modalContext";
 
-const Modal = ({ token }) => {
+const Modal = ({ boardOwner, token }) => {
   const { modalState, setModalState } = useModalState();
+  const router = useRouter();
+  const { register, handleSubmit, reset } = useForm();
 
-  const { register, watch, handleSubmit, control } = useForm();
+  console.log(boardOwner.image);
 
   const onSubmit = async (data, e) => {
-    e.preventDefault();
-    console.log(data);
+    const reqBody = {
+      title: data.title,
+      content: data.price,
+      receiver: boardOwner.email,
+    };
 
-    Axios.post("");
+    try {
+      const res = await Axios.post(
+        "http://110.12.218.147:8080/api/v1/message",
+        reqBody,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    setModalState(false);
+      console.log("asdfasdf", res.data);
+
+      if (res.data.result === "success") {
+        reset();
+      } else {
+        alert("다시 로그인 해주세요");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      reset();
+      setModalState(false);
+    }
   };
+
+  console.log(boardOwner);
 
   return (
     <>
@@ -31,7 +62,7 @@ const Modal = ({ token }) => {
                   <h3 className="text-3xl font-semibold">쪽지 보내기</h3>
                   <div className="flex items-center self-end">
                     <input
-                      className="ml-2 - inline-block w-48 outline-none 
+                      className="ml-2 inline-block placeholder-blue-700 w-48 outline-none 
                     bg-slate-50 p-2 text-xl"
                       placeholder="제목"
                       {...register("title")}
@@ -41,7 +72,7 @@ const Modal = ({ token }) => {
                 {/*body*/}
                 <div className="relative px-6 py-4 bg-slate-50">
                   <textarea
-                    className="h-52 w-full outline-none bg-slate-50"
+                    className="h-52 w-full placeholder-blue-700 outline-none bg-slate-50"
                     placeholder="본문"
                     {...register("text")}
                   ></textarea>

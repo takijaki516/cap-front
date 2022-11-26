@@ -47,7 +47,12 @@ const index = () => {
   }
 
   if (!isSuccess) {
-    return <p>loading...</p>;
+    return (
+      <div>
+        <Link href="/">로그인 해주세요</Link>
+        <div>유저는 있는데 다른 에러임</div>
+      </div>
+    );
   }
 
   if (!!userEmail && isSuccess) {
@@ -67,6 +72,7 @@ const index = () => {
         <Input className="p-4 max-w-7xl m-auto" />
 
         <Grid className="p-4 max-w-7xl m-auto" title="전체 상품">
+          {/* 링크 까지 넣어주었음 */}
           {data.data.data.map((post) => (
             <Link key={post.board_id} href={`/board/${post.board_id}`}>
               <div className="cursor-pointer hover:opacity-80 duration-300">

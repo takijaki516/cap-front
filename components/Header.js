@@ -15,6 +15,7 @@ function Header() {
     >
       {/* left */}
       <div className="flex justify-center items-center space-x-10 p-2">
+        {/* icon */}
         <Link href="/homepage">
           <div
             className="flex items-center rounded-full overflow-hidden
@@ -23,22 +24,21 @@ function Header() {
             <Image src="/index_pic.jpg" width={55} height={55} layout="fixed" />
           </div>
         </Link>
+
+        {/* dropdown */}
         <Dropdown />
       </div>
 
       {/* right */}
       <div className="flex items-center space-x-6">
-        <HeaderLink
-          Icon={ChatIcon}
-          text="내게시글"
-          feed
-          linkUrl="/user/post/2"
-        />
+        {/* 교체 */}
+        <HeaderLink Icon={ChatIcon} text="내게시글" feed linkUrl="/user/post" />
+        {/* 교체 */}
         <HeaderLink
           Icon={MailOutlineIcon}
           text="쪽지함"
           feed
-          linkUrl="/dashboard/"
+          linkUrl="/user/message"
         />
         {/* <HeaderLink
           Icon={Avatar}
@@ -47,7 +47,7 @@ function Header() {
           avatar
           linkUrl="/dashboard/"
         /> */}
-        <HeaderLink Icon={LogoutIcon} text="로그아웃" feed avatar />
+        <HeaderLink Icon={LogoutIcon} text="로그아웃" feed />
       </div>
     </header>
   );
