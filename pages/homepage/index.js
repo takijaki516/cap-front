@@ -1,9 +1,7 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import Axios from "axios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { useAuthState } from "../../context/auth";
 
@@ -15,9 +13,9 @@ import Card from "../../components/Card";
 import Hero from "../../components/Hero";
 
 const HomePage = () => {
-  const { userEmail, setUserEmail } = useAuthState();
+  const { userEmail, useEmailFetch } = useAuthState();
 
-  const queryClient = useQueryClient();
+  useEmailFetch();
 
   const { isLoading, isError, data, error, isSuccess } = useQuery({
     queryKey: ["boards"],
@@ -26,17 +24,6 @@ const HomePage = () => {
       return data;
     },
   });
-
-  useEffect(() => {
-    const storageData = localStorage.getItem("auth");
-    if (!!storageData) {
-      const emailData = JSON.parse(storageData).email;
-      console.log(emailData);
-      setUserEmail(emailData);
-    } else {
-      setUserEmail("");
-    }
-  }, []);
 
   if (!userEmail) {
     return (

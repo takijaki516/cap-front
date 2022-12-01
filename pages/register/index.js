@@ -60,9 +60,9 @@ const RegisterPage = () => {
     <div className="h-screen bg-[url('/index_pic.jpg')] bg-[length:500px_500px] opacity-75 ">
       <div className="flex flex-col items-center min-w-fit  sm:pt-0 ">
         <div className="mt-36">
-          <a href="/">
+          <Link href="/">
             <h3 className="text-4xl font-bold">회원가입</h3>
-          </a>
+          </Link>
         </div>
 
         <div

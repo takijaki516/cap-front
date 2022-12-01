@@ -13,21 +13,12 @@ import cateItems from "../../../dummydata/menuitem.json";
 import { useAuthState } from "../../../context/auth";
 
 const CateIdPage = () => {
-  const { userEmail, setUserEmail } = useAuthState();
+  const { userEmail, setUserEmail, useEmailFetch } = useAuthState();
   const [categoryName, setCategoryName] = useState("");
   const router = useRouter();
   const cateId = router.query.cateid;
 
-  useEffect(() => {
-    const storageData = localStorage.getItem("auth");
-    if (!!storageData) {
-      const emailData = JSON.parse(storageData).email;
-      console.log(emailData);
-      setUserEmail(emailData);
-    } else {
-      setUserEmail("");
-    }
-  }, []);
+  useEmailFetch();
 
   useEffect(() => {
     cateItems.map((level1) => {

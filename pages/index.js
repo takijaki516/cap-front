@@ -86,7 +86,12 @@ export default function Home() {
         <main className="flex h-screen items-center justify-between">
           {/*image*/}
           <div className="ml-40 basis-2/5 relative h-4/6 overflow-hidden rounded-t-full">
-            <Image src="/index_pic.jpg" layout="fill" objectFit="cover" />
+            <Image
+              src="/index_pic.jpg"
+              layout="fill"
+              objectFit="cover"
+              alt="mainlogo"
+            />
           </div>
 
           {/*로그인 회원 가입*/}
