@@ -2,27 +2,20 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Axios from "axios";
 
 import Card from "../../../components/Card";
 import Grid from "../../../components/Grid";
 import Header from "../../../components/Header";
-import Hero from "../../../components/Hero";
 import Input from "../../../components/Input";
-
+import cateItems from "../../../dummydata/menuitem.json";
 import { useAuthState } from "../../../context/auth";
 
-import cateItems from "../../../dummydata/menuitem.json";
-import CategoryName from "../../../components/CategoryName";
-
-const index = () => {
+const CateIdPage = () => {
   const { userEmail, setUserEmail } = useAuthState();
   const [categoryName, setCategoryName] = useState("");
-
   const router = useRouter();
-  const queryClient = useQueryClient();
-
   const cateId = router.query.cateid;
 
   useEffect(() => {
@@ -100,4 +93,4 @@ const index = () => {
   }
 };
 
-export default index;
+export default CateIdPage;

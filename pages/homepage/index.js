@@ -14,7 +14,7 @@ import Card from "../../components/Card";
 
 import Hero from "../../components/Hero";
 
-const index = () => {
+const HomePage = () => {
   const { userEmail, setUserEmail } = useAuthState();
 
   const queryClient = useQueryClient();
@@ -87,4 +87,4 @@ const index = () => {
   return <div>haha</div>;
 };
 
-export default index;
+export default HomePage;

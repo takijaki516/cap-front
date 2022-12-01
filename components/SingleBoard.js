@@ -3,6 +3,7 @@ import "moment/locale/ko";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { useModalState } from "../context/modalContext";
 import { useAuthState } from "../context/auth";
@@ -84,7 +85,7 @@ const SingleBoard = ({ data }) => {
       {/* image */}
       <div className="basis-1/3">
         {/* TODO: image logic */}
-        <img src="/no_image.jpg" />
+        <Image src="/no_image.jpg" alt="main product" />
       </div>
 
       {/* left */}

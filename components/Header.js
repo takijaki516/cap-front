@@ -21,7 +21,13 @@ function Header() {
             className="flex items-center rounded-full overflow-hidden
           justify-center space-x-3 cursor-pointer border-4 border-gray-300"
           >
-            <Image src="/index_pic.jpg" width={55} height={55} layout="fixed" />
+            <Image
+              src="/index_pic.jpg"
+              width={55}
+              height={55}
+              layout="fixed"
+              alt="index"
+            />
           </div>
         </Link>
 

@@ -5,7 +5,7 @@ import Axios from "axios";
 import { useEffect } from "react";
 import { useAuthState } from "../../context/auth";
 
-const index = () => {
+const RegisterPage = () => {
   const router = useRouter();
   const { userEmail, setUserEmail } = useAuthState();
 
@@ -137,4 +137,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default RegisterPage;

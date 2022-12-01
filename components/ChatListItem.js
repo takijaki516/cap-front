@@ -1,4 +1,5 @@
-import React from "react";
+import Image from "next/image";
+
 import { useModalState } from "../context/modalContext";
 import Modal from "./Modal";
 
@@ -15,7 +16,13 @@ const ChatListItem = ({ item, showReplyBtn }) => {
     <li className="flex justify-between items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition my-10 ">
       <div className="flex flex-col w-full ml-1 mt-1 space-y-2">
         <div className="flex space-x-4">
-          <img src="/no_image.jpg" width="60" height="40" className="rounded" />
+          <Image
+            src="/no_image.jpg"
+            width="60"
+            height="40"
+            className="rounded"
+            alt="product"
+          />
           <span className="flex flex-col">
             <span>
               <span className="text-lg font-semibold ">상품명:</span>

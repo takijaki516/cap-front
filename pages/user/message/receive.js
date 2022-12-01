@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Axios from "axios";
 import { useRouter } from "next/router";
 
@@ -22,8 +22,6 @@ const ReceivedMsgPage = () => {
     if (!!storageData) {
       const tokenData = JSON.parse(storageData).data;
       setToken(tokenData);
-
-      console.log(userEmail);
     } else {
       setToken("");
     }
