@@ -31,22 +31,19 @@ function Header() {
 
       {/* right */}
       <div className="flex items-center space-x-6">
-        {/* 교체 */}
         <HeaderLink Icon={ChatIcon} text="내게시글" feed linkUrl="/user/post" />
-        {/* 교체 */}
         <HeaderLink
           Icon={MailOutlineIcon}
-          text="쪽지함"
+          text="보낸 쪽지함"
           feed
-          linkUrl="/user/message"
+          linkUrl="/user/message/sent"
         />
-        {/* <HeaderLink
-          Icon={Avatar}
-          text="회원정보"
+        <HeaderLink
+          Icon={MailOutlineIcon}
+          text="받은 쪽지함"
           feed
-          avatar
-          linkUrl="/dashboard/"
-        /> */}
+          linkUrl="/user/message/receive"
+        />
         <HeaderLink Icon={LogoutIcon} text="로그아웃" feed />
       </div>
     </header>

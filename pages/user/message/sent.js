@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 
 import Header from "../../../components/Header";
 import { useAuthState } from "../../../context/auth";
-import Table from "../../../components/Table";
-import TableItem from "../../../components/TableItem";
+import ChatList from "../../../components/ChatList";
+import ChatListItem from "../../../components/ChatListItem";
 
-const UserPostPage = () => {
-  const { userEmail, useEmailFetch, setUserEmail } = useAuthState();
+const SentMsgPage = () => {
+  const { userEmail, setUserEmail, useEmailFetch } = useAuthState();
   const router = useRouter();
   const [token, setToken] = useState("");
 
@@ -29,30 +29,29 @@ const UserPostPage = () => {
   }, []);
 
   // query function
-  const getBoardByUser = async () => {
+  const getMessageByUser = async () => {
     const data = await Axios.get(
-      `http://110.12.218.147:8080/api/v1/board/myboard`,
+      `http://110.12.218.147:8080/api/v1/sendMessages`,
       {
         headers: {
           Authorization: token,
         },
       }
     );
+
     return data;
   };
 
   const { isLoading, isError, data, error, isSuccess } = useQuery({
-    queryKey: ["userBoard"],
+    queryKey: ["receivedMsg"],
     queryFn: async () => {
       try {
-        return await getBoardByUser();
+        return await getMessageByUser();
       } catch {
-        if (data.data.data === "tokenError") {
-          setUserEmail("");
-          localStorage.removeItem("auth");
-          router.push("/");
-          return;
-        }
+        setUserEmail("");
+        localStorage.removeItem("auth");
+        router.push("/");
+        return;
       }
     },
     enabled: !!token,
@@ -68,24 +67,26 @@ const UserPostPage = () => {
     </Link>;
   }
 
-  // render
   if (!!userEmail && isSuccess) {
     return (
-      <div className="bg-[#F3F2EF]">
+      <div>
         <Head>
           <title>캡스톤</title>
         </Head>
         <Header />
 
-        <Table>
+        <ChatList pageTitle={router.pathname.split("/").pop()}>
           {data.data.data.map((item) => (
-            // console.log(item)
-            <TableItem key={item.board_id} item={item} />
+            <ChatListItem
+              key={item.message_id}
+              showReplyBtn={false}
+              item={item}
+            />
           ))}
-        </Table>
+        </ChatList>
       </div>
     );
   }
 };
 
-export default UserPostPage;
+export default SentMsgPage;

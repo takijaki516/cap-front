@@ -2,39 +2,18 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Axios from "axios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { useAuthState } from "../../context/auth";
-import { useModalState } from "../../context/modalContext";
-
 import Header from "../../components/Header";
 import SingleBoard from "../../components/SingleBoard";
 import Modal from "../../components/Modal";
 
 const SingleBoardPage = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
-  const [token, setToken] = useState("");
-
-  const { userEmail, setUserEmail } = useAuthState();
-  const { modalState } = useModalState();
-
+  const { userEmail, useEmailFetch } = useAuthState();
   const boardId = router.query.boardid;
-
-  useEffect(() => {
-    const storageData = localStorage.getItem("auth");
-
-    if (!!storageData) {
-      const parsedData = JSON.parse(storageData);
-      console.log(parsedData);
-      setToken(parsedData.data);
-      setUserEmail(parsedData.email);
-    } else {
-      setUserEmail("");
-      setToken("");
-    }
-  }, []);
+  useEmailFetch();
 
   // react query
   const getBoardByIdFn = async ({ queryKey }) => {
@@ -74,7 +53,7 @@ const SingleBoardPage = () => {
         <div className="w-5/6 mx-auto">
           <SingleBoard data={data.data.data} />
           {/*  쪽지 receiver email을 알지 못한다. */}
-          <Modal boardOwner={data.data.data} token={token} />
+          <Modal board={data.data.data} messageItem={null} />
         </div>
       </div>
     );

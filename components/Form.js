@@ -7,10 +7,9 @@ import { useRouter } from "next/router";
 function Form() {
   const router = useRouter();
   const { register, watch, handleSubmit, control, reset } = useForm();
-
-  const [token, setToken] = useState("");
   const [pic, setPic] = useState("");
 
+  const [token, setToken] = useState("");
   // token 확인
   useEffect(() => {
     const storageData = localStorage.getItem("auth");

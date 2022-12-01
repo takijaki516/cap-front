@@ -8,15 +8,37 @@ import { useModalState } from "../context/modalContext";
 import { useAuthState } from "../context/auth";
 
 const SingleBoard = ({ data }) => {
-  const { modalState, setModalState } = useModalState();
+  const { setModalState } = useModalState();
   const { userEmail } = useAuthState();
   const router = useRouter();
   const [token, setToken] = useState("");
 
   const msgBtnHandler = (e) => {
-    setModalState((prev) => !prev);
+    setModalState(true);
   };
 
+  const statusTypeText = (type) => {
+    if (type === "0") {
+      return "렌탈가능";
+    }
+    if (type === "1") {
+      return "사용중";
+    }
+    if (type === "2") {
+      return "완료";
+    }
+  };
+  const statusTypeCSS = (type) => {
+    if (type === "0") {
+      return "statusGreen";
+    }
+    if (type === "1") {
+      return "statusYellow";
+    }
+    if (type === "2") {
+      return "statusOrange";
+    }
+  };
   // token 확인
   useEffect(() => {
     const storageData = localStorage.getItem("auth");
@@ -30,7 +52,7 @@ const SingleBoard = ({ data }) => {
 
   const url = `http://110.12.218.147:8080/api/v1/board/delete?board_id=${data.board_id}`;
 
-  // 확인
+  // TODO: token 에러 처리하기 (그냥 axios에서 처리 하는게 더 좋을꺼 같다.)
   const deleteBtnHandler = async (data) => {
     try {
       const res = await Axios.post(
@@ -74,10 +96,10 @@ const SingleBoard = ({ data }) => {
           </div>
         </div>
 
-        <div className="flex justify-end space-x-8 mx-4 mt-1 mb-2 ">
-          <div>
+        <div className="flex justify-end space-x-8 mx-4 my-1 items-center ">
+          <div className={`${statusTypeCSS(data.status)} p-1 rounded`}>
             <span className="text-sm font-medium text-gray-600">상태: </span>
-            {data.status}
+            {statusTypeText(data.status)}
           </div>
           <div className="text-gray-600">
             <Moment fromNow ago>

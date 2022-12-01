@@ -18,6 +18,22 @@
     @apply flex items-center justify-center space-x-2 cursor-pointer
     w-full py-3 rounded hover:bg-gray-800;
   }
+
+  .statusGreen {
+    @apply text-green-700 bg-green-100 rounded-sm;
+  }
+
+  .statusYellow {
+    @apply text-yellow-700 bg-yellow-100 rounded-sm;
+  }
+
+  .statusOrange {
+    @apply text-orange-700 bg-orange-100 rounded-sm;
+  }
+
+  .statusRed {
+    @apply text-red-700 bg-red-100 rounded-sm;
+  }
 }
 
 .dropdown:hover > .dropdown-content {

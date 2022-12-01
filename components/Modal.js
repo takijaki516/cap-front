@@ -1,23 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
-import { useRouter } from "next/router";
 
 import { useModalState } from "../context/modalContext";
 
-const Modal = ({ boardOwner, token }) => {
+const Modal = ({ board, messageItem }) => {
+  const [token, setToken] = useState("");
   const { modalState, setModalState } = useModalState();
-  const router = useRouter();
   const { register, handleSubmit, reset } = useForm();
 
-  console.log(boardOwner.image);
+  // token 확인
+  useEffect(() => {
+    const storageData = localStorage.getItem("auth");
+    if (!!storageData) {
+      const tokenData = JSON.parse(storageData).data;
+      setToken(tokenData);
+    } else {
+      setToken("");
+    }
+  }, []);
 
+  // TODO: 토큰 에러 처리해야 됨
   const onSubmit = async (data, e) => {
-    const reqBody = {
-      title: data.title,
-      content: data.price,
-      receiver: boardOwner.email,
-    };
+    let reqBody;
+    if (!!messageItem) {
+      // 답장할때
+      reqBody = {
+        title: "RE] " + messageItem.title,
+        content: data.text,
+        receiver: messageItem.sender,
+        boardtitle: messageItem.title,
+      };
+    } else {
+      //처음 보낼때
+      reqBody = {
+        title: board.title + " 문의",
+        content: data.text,
+        receiver: board.email,
+        boardtitle: board.title,
+      };
+    }
 
     try {
       const res = await Axios.post(
@@ -32,7 +54,7 @@ const Modal = ({ boardOwner, token }) => {
         }
       );
 
-      console.log("asdfasdf", res.data);
+      console.log("modal 에서 res 보는 console.log", res);
 
       if (res.data.result === "success") {
         reset();
@@ -47,8 +69,6 @@ const Modal = ({ boardOwner, token }) => {
     }
   };
 
-  console.log(boardOwner);
-
   return (
     <>
       {modalState ? (
@@ -60,19 +80,24 @@ const Modal = ({ boardOwner, token }) => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">쪽지 보내기</h3>
+                  {/* 쪽지 제목 (클라이언트에서 고정해줄것임 RE를 붙여서) */}
                   <div className="flex items-center self-end">
                     <input
-                      className="ml-2 inline-block placeholder-blue-700 w-48 outline-none 
-                    bg-slate-50 p-2 text-xl"
-                      placeholder="제목"
-                      {...register("title")}
+                      className="ml-2 inline-block w-48 outline-none 
+                    bg-slate-50 p-2 text-xl placeholder-black"
+                      placeholder={
+                        !!board
+                          ? board.title + " 문의"
+                          : "RE] " + messageItem.title
+                      }
+                      disabled
                     />
                   </div>
                 </div>
                 {/*body*/}
                 <div className="relative px-6 py-4 bg-slate-50">
                   <textarea
-                    className="h-52 w-full placeholder-blue-700 outline-none bg-slate-50"
+                    className="h-52 w-full  outline-none bg-slate-50"
                     placeholder="본문"
                     {...register("text")}
                   ></textarea>
