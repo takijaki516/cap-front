@@ -23,17 +23,6 @@ export default function Home() {
 
   useEmailFetch();
 
-  // useEffect(() => {
-  //   const storageData = localStorage.getItem("auth");
-  //   if (!!storageData) {
-  //     const emailData = JSON.parse(storageData).email;
-  //     console.log(emailData);
-  //     setUserEmail(emailData);
-  //   } else {
-  //     setUserEmail("");
-  //   }
-  // }, []);
-
   const onSubmit = async (data, e) => {
     e.preventDefault();
 
@@ -73,6 +62,10 @@ export default function Home() {
       reset();
     }
   };
+
+  if (!!userEmail) {
+    router.push("/homepage");
+  }
 
   if (!userEmail) {
     return (

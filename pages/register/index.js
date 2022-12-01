@@ -2,12 +2,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
-import { useEffect } from "react";
 import { useAuthState } from "../../context/auth";
 
 const RegisterPage = () => {
   const router = useRouter();
-  const { userEmail, setUserEmail } = useAuthState();
+  const { userEmail, useEmailFetch } = useAuthState();
 
   const {
     register,
@@ -16,23 +15,11 @@ const RegisterPage = () => {
     reset,
   } = useForm();
 
-  // localstorage의 세션 확인1
-  useEffect(() => {
-    const storageData = localStorage.getItem("auth");
-    if (!!storageData) {
-      const emailData = JSON.parse(storageData).email;
-      console.log(emailData);
-      setUserEmail(emailData);
-    } else {
-      setUserEmail("");
-    }
-  }, []);
-  // localstorage의 세션 확인2
-  useEffect(() => {
-    if (!!userEmail) {
-      router.push("/homepage");
-    }
-  }, [userEmail]);
+  useEmailFetch();
+
+  if (!!userEmail) {
+    router.push("/homepage");
+  }
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
