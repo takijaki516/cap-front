@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Axios from "axios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -56,15 +56,6 @@ const SentMsgPage = () => {
     },
     enabled: !!token,
   });
-
-  if (isLoading) {
-    return (
-      // <Link href="/">
-      //   <div>로그인 해주세요</div>
-      // </Link>
-      <div></div>
-    );
-  }
 
   if (!userEmail) {
     return (

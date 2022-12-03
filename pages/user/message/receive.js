@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useQuery } from "@tanstack/react-query";
 import Axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import { useAuthState } from "../../../context/auth";
 import ChatList from "../../../components/ChatList";
