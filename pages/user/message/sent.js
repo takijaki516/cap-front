@@ -58,13 +58,20 @@ const SentMsgPage = () => {
   });
 
   if (isLoading) {
-    <div>Loading</div>;
+    return (
+      // <Link href="/">
+      //   <div>로그인 해주세요</div>
+      // </Link>
+      <div></div>
+    );
   }
 
   if (!userEmail) {
-    <Link href="/">
-      <div>로그인 해주세요</div>
-    </Link>;
+    return (
+      <Link href="/">
+        <div>로그인 해주세요</div>
+      </Link>
+    );
   }
 
   if (!!userEmail && isSuccess) {

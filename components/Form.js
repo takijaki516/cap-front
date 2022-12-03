@@ -4,6 +4,8 @@ import Select from "react-select";
 import Axios from "axios";
 import { useRouter } from "next/router";
 
+import { useAuthState } from "../context/auth";
+
 function Form() {
   const router = useRouter();
   const {
@@ -15,6 +17,10 @@ function Form() {
     formState: { errors },
   } = useForm();
   const [token, setToken] = useState("");
+
+  const { setUserEmail, userEmail, useEmailFetch } = useAuthState();
+
+  useEmailFetch();
 
   // token 확인
   useEffect(() => {
@@ -42,8 +48,6 @@ function Form() {
       formData.append("price", data.price);
     }
 
-    console.log(data.board_image.length);
-
     try {
       const res = await Axios.post(
         "http://110.12.218.147:8080/api/v1/board/add",
@@ -57,19 +61,37 @@ function Form() {
         }
       );
 
-      console.log(res);
       if (res.data.result === "success") {
         reset();
+
+        window.alert("성공");
         router.push("/homepage");
       } else {
-        alert("다시 로그인 해주세요");
+        window.alert("다시 로그인 해주세요");
+
+        setUserEmail("");
+        localStorage.removeItem("auth");
+        router.push("/");
+        return;
       }
     } catch (err) {
-      console.log(err);
+      setUserEmail("");
+      localStorage.removeItem("auth");
+      router.push("/");
+
+      return;
     } finally {
       reset();
     }
   };
+
+  if (!userEmail) {
+    return (
+      <Link href="/">
+        <div>로그인 해주세요</div>
+      </Link>
+    );
+  }
 
   return (
     <div className="w-10/12">

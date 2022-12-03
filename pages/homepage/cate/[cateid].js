@@ -47,14 +47,10 @@ const CateIdPage = () => {
 
   if (!userEmail) {
     return (
-      <div>
-        <Link href="/">로그인 해주세요</Link>
-      </div>
+      <Link href="/">
+        <div>로그인 해주세요</div>
+      </Link>
     );
-  }
-
-  if (!isSuccess) {
-    return <p>loading...</p>;
   }
 
   if (!!userEmail && isSuccess) {

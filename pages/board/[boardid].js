@@ -31,15 +31,11 @@ const SingleBoardPage = () => {
   });
 
   if (!userEmail) {
-    return (
-      <div>
-        <Link href="/">로그인 해주세요</Link>
-      </div>
-    );
+    return <div>{/* <Link href="/">로그인 해주세요</Link> */}</div>;
   }
 
   if (!isSuccess) {
-    return <p>loading...</p>;
+    return <div>{/* <Link href="/">로그인 해주세요</Link> */}</div>;
   }
 
   if (!!userEmail && isSuccess) {

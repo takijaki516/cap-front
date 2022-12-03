@@ -58,14 +58,12 @@ const UserPostPage = () => {
     enabled: !!token,
   });
 
-  if (isLoading) {
-    <div>Loading</div>;
-  }
-
   if (!userEmail) {
-    <Link href="/">
-      <div>로그인 해주세요</div>
-    </Link>;
+    return (
+      <Link href="/">
+        <div>로그인 해주세요</div>
+      </Link>
+    );
   }
 
   // render

@@ -76,6 +76,7 @@ const SingleBoard = ({ data }) => {
       );
 
       if (res.data.result === "success") {
+        window.alert("성공");
         router.push("/homepage");
       }
     } catch (err) {

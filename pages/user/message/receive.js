@@ -53,6 +53,14 @@ const ReceivedMsgPage = () => {
     enabled: !!token,
   });
 
+  if (!userEmail) {
+    return (
+      <Link href="/">
+        <div>로그인 해주세요</div>
+      </Link>
+    );
+  }
+
   if (!!userEmail && isSuccess) {
     return (
       <div>

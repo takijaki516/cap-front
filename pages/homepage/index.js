@@ -27,18 +27,9 @@ const HomePage = () => {
 
   if (!userEmail) {
     return (
-      <div>
-        <Link href="/">로그인 해주세요</Link>
-      </div>
-    );
-  }
-
-  if (!isSuccess) {
-    return (
-      <div>
-        <Link href="/">로그인 해주세요</Link>
-        <div>유저는 있는데 다른 에러임</div>
-      </div>
+      <Link href="/">
+        <div>로그인 해주세요</div>
+      </Link>
     );
   }
 

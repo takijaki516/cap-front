@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
+import { useRouter } from "next/router";
 
 import { useModalState } from "../context/modalContext";
 import { useAuthState } from "../context/auth";
@@ -12,6 +13,7 @@ const Modal = ({ board, messageItem }) => {
   const { modalState, setModalState } = useModalState();
   const { register, handleSubmit, reset } = useForm();
   const { setUserEmail } = useAuthState();
+  const router = useRouter();
 
   // token 확인
   useEffect(() => {
@@ -59,8 +61,11 @@ const Modal = ({ board, messageItem }) => {
 
       if (res.data.result === "success") {
         reset();
+        window.alert("성공");
       }
     } catch (err) {
+      window.alert("다시로그인 해주세요");
+
       setModalState(false);
       setUserEmail("");
       localStorage.removeItem("auth");

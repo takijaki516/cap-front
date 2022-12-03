@@ -4,12 +4,14 @@ import Moment from "react-moment";
 import "moment/locale/ko";
 import Axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 
 import { useAuthState } from "../context/auth";
 
 const TableItem = ({ item }) => {
   const [token, setToken] = useState("");
   const { setUserEmail } = useAuthState();
+  const router = useRouter();
 
   const queryClient = useQueryClient();
 
@@ -61,6 +63,7 @@ const TableItem = ({ item }) => {
     },
   });
 
+  // TODO: delete 오류 왜?????
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const url = `http://110.12.218.147:8080/api/v1/board/delete?board_id=${item.board_id}`;
@@ -78,9 +81,11 @@ const TableItem = ({ item }) => {
         );
 
         if (res.data.result === "success") {
+          window.alert("성공");
           router.push("/homepage");
         }
       } catch (err) {
+        window.alert("다시 로그인해주세요");
         setUserEmail("");
         localStorage.removeItem("auth");
         router.push("/");
