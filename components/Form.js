@@ -29,12 +29,20 @@ function Form() {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+    if (data.board_image.length === 0) {
+      formData.append("category_id", data.cate.value);
+      formData.append("title", data.title);
+      formData.append("text", data.text);
+      formData.append("price", data.price);
+    } else {
+      formData.append("imageList", data.board_image[0]);
+      formData.append("category_id", data.cate.value);
+      formData.append("title", data.title);
+      formData.append("text", data.text);
+      formData.append("price", data.price);
+    }
 
-    formData.append("imageList", data.board_image[0]);
-    formData.append("category_id", data.cate.value);
-    formData.append("title", data.title);
-    formData.append("text", data.text);
-    formData.append("price", data.price);
+    console.log(data.board_image.length);
 
     try {
       const res = await Axios.post(
@@ -50,7 +58,6 @@ function Form() {
       );
 
       console.log(res);
-
       if (res.data.result === "success") {
         reset();
         router.push("/homepage");
@@ -80,7 +87,9 @@ function Form() {
             placeholder="제목"
             {...register("title", { required: true })}
           />
-          {errors.title && <span className="text-red-600">제목 형식 오류</span>}
+          {errors.title && (
+            <span className="text-red-600">제목을 입력해주세요</span>
+          )}
         </div>
 
         {/* 카테고리 */}
@@ -94,6 +103,7 @@ function Form() {
             render={({ field }) => (
               <Select
                 isClearable
+                isSearchable={false}
                 {...field}
                 options={[
                   { value: "0101", label: "여성의류" },
@@ -113,7 +123,9 @@ function Form() {
               />
             )}
           />
-          {errors.cate && <span className="text-red-600">cate 형식 오류</span>}
+          {errors.cate && (
+            <span className="text-red-600">카테고리를 선택해주세요</span>
+          )}
         </div>
 
         {/* 본문 */}
@@ -126,7 +138,9 @@ function Form() {
             placeholder="본문"
             {...register("text", { required: true })}
           />
-          {errors.text && <span className="text-red-600">text 형식 오류</span>}
+          {errors.text && (
+            <span className="text-red-600">본문을 입력해주세요</span>
+          )}
         </div>
 
         <div className="flex flex-col w-full space-y-2">
@@ -136,7 +150,6 @@ function Form() {
             accept="image/png,image/jpg,image/jpeg"
             {...register("board_image")}
           />
-          {errors.file && <span className="text-red-600">file 형식 오류</span>}
         </div>
 
         <div className="flex flex-col w-full space-y-2">
@@ -150,7 +163,7 @@ function Form() {
             {...register("price", { required: true })}
           />
           {errors.price && (
-            <span className="text-red-600">number 형식 오류</span>
+            <span className="text-red-600">가격을 입력해주세요</span>
           )}
         </div>
 

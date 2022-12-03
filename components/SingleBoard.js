@@ -60,6 +60,7 @@ const SingleBoard = ({ data }) => {
 
   const url = `http://110.12.218.147:8080/api/v1/board/delete?board_id=${data.board_id}`;
 
+  // TODO: 지금은 서버에러가 난다. POSTMAN으로도 에러가남, 예전에는 정상작동 했었음
   const deleteBtnHandler = async (data) => {
     try {
       const res = await Axios.post(

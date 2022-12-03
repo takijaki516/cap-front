@@ -16,7 +16,6 @@ const formpage = () => {
         className="flex flex-col md:flex-row justify-center
        gap-x-5 px-4 sm:px-12"
       >
-        {/* <Sidebar className="grow" /> */}
         <Form />
       </main>
     </div>
