@@ -20,19 +20,19 @@ const TableItem = ({ item }) => {
     imgSrc = "/no_image.jpg";
   }
 
+  // comma won
   let commaPrice = [];
   let counter = 0;
   for (let i = item.price.length - 1; i >= 0; i--) {
-    counter++;
     if (counter === 3) {
       commaPrice.unshift(",");
-      counter = 0;
+      commaPrice.unshift(item.price[i]);
+      counter = 1;
+      continue;
     }
+    counter++;
     commaPrice.unshift(item.price[i]);
   }
-
-  console.log("item price", item.price);
-  console.log("comma ", commaPrice);
 
   const statusMutation = useMutation({
     mutationFn: async (type) => {
@@ -147,7 +147,7 @@ const TableItem = ({ item }) => {
       </td>
 
       <td className="px-4 py-3 text-ms font-semibold border">
-        {item.price} 원
+        {commaPrice.join("")} 원
       </td>
       <td className="px-4 py-3 text-xs border">
         <span

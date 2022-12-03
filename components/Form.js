@@ -6,7 +6,14 @@ import { useRouter } from "next/router";
 
 function Form() {
   const router = useRouter();
-  const { register, watch, handleSubmit, control, reset } = useForm();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [token, setToken] = useState("");
 
   const [pic, setPic] = useState("");
@@ -22,21 +29,10 @@ function Form() {
     }
   }, []);
 
-  const formData = new FormData();
-
-  const onImgChange = (e) => {
-    const imgSrc = e.target.files[0];
-    formData.append("imageList", imgSrc);
-  };
-
   const onSubmit = async (data) => {
-    // const reqBody = {
-    //   category_id: data.cate.value,
-    //   title: data.title,
-    //   text: data.text,
-    //   price: data.price,
-    // };
+    const formData = new FormData();
 
+    formData.append("imageList", data.board_image[0]);
     formData.append("category_id", data.cate.value);
     formData.append("title", data.title);
     formData.append("text", data.text);
@@ -84,8 +80,9 @@ function Form() {
           <input
             className="h-10 leading-10 text-lg rounded-md"
             placeholder="제목"
-            {...register("title")}
+            {...register("title", { required: true })}
           />
+          {errors.title && <span className="text-red-600">제목 형식 오류</span>}
         </div>
 
         {/* 카테고리 */}
@@ -95,7 +92,7 @@ function Form() {
           <Controller
             name="cate"
             control={control}
-            // {...register("cate")}
+            rules={{ required: true }}
             render={({ field }) => (
               <Select
                 isClearable
@@ -118,6 +115,7 @@ function Form() {
               />
             )}
           />
+          {errors.cate && <span className="text-red-600">cate 형식 오류</span>}
         </div>
 
         {/* 본문 */}
@@ -128,26 +126,19 @@ function Form() {
           <textarea
             className="h-72 leading-10 text-lg rounded-md"
             placeholder="본문"
-            {...register("text")}
+            {...register("text", { required: true })}
           />
+          {errors.text && <span className="text-red-600">text 형식 오류</span>}
         </div>
 
-        {/* image 업로드  */}
         <div className="flex flex-col w-full space-y-2">
-          {/* 업로드된 image */}
-          {/* {pic ? (
-            <img src={pic} className="h-14 w-14 bg-slate-500" />
-          ) : (
-            <div className="h-14 w-14  bg-slate-500" />
-          )} */}
           <label className="text-lg font-bold">이미지</label>
-          {/* 이미지 포맷형식? */}
           <input
             type="file"
             accept="image/png,image/jpg,image/jpeg"
-            name="board_image"
-            onChange={onImgChange}
+            {...register("board_image")}
           />
+          {errors.file && <span className="text-red-600">file 형식 오류</span>}
         </div>
 
         <div className="flex flex-col w-full space-y-2">
@@ -156,9 +147,13 @@ function Form() {
           </label>
           <input
             className="h-8 leading-10 text-lg rounded-md"
+            type="number"
             placeholder="원 단위"
-            {...register("price")}
+            {...register("price", { required: true })}
           />
+          {errors.price && (
+            <span className="text-red-600">number 형식 오류</span>
+          )}
         </div>
 
         <button

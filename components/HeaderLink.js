@@ -2,12 +2,16 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { useAuthState } from "../context/auth";
+
 const HeaderLink = ({ linkUrl, Icon, text, feed, active, hidden }) => {
   const router = useRouter();
+  const { setUserEmail } = useAuthState();
 
   const logoutHandler = () => {
     localStorage.removeItem("auth");
     router.push("/");
+    setUserEmail("");
   };
 
   // link 가 없을시

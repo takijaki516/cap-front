@@ -11,7 +11,7 @@ const ChatListItem = ({ item, showReplyBtn }) => {
   };
 
   return (
-    <li className="flex justify-between items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition my-10 ">
+    <li className="flex justify-between items-center bg-white mt-2 p-2 hover:shadow-lg rounded  transition my-10 ">
       <div className="flex flex-col w-full ml-1 mt-1 space-y-2">
         <div className="flex space-x-4">
           <span className="flex flex-col">
@@ -56,8 +56,11 @@ const ChatListItem = ({ item, showReplyBtn }) => {
         </div>
       </div>
       {showReplyBtn && (
-        <div className="ml-28 min-w-fit p-2 mr-4 bg-gray-500 rounded hover:bg-gray-600 cursor-pointer">
-          <span onClick={msgBtnHandler} className="text-white font-bold">
+        <div className="ml-28 min-w-fit p-2 mr-4 bg-gray-500 rounded hover:bg-gray-600 ">
+          <span
+            onClick={msgBtnHandler}
+            className="text-white font-bold cursor-pointer"
+          >
             답장하기
           </span>
           <Modal board={null} messageItem={item} />
