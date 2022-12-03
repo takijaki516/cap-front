@@ -16,8 +16,6 @@ function Form() {
   } = useForm();
   const [token, setToken] = useState("");
 
-  const [pic, setPic] = useState("");
-
   // token 확인
   useEffect(() => {
     const storageData = localStorage.getItem("auth");

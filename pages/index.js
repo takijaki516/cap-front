@@ -90,7 +90,6 @@ export default function Home() {
           {/*로그인 회원 가입*/}
           <div className="basis-3/5 flex flex-col items-center space-y-6 w-full">
             <div className="text-7xl !z-20">렌트허브</div>
-            {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex-col flex justify-center w-3/5"
@@ -106,6 +105,9 @@ export default function Home() {
                 {...register("email", { required: true })}
                 className="border-2 border-gray-300 rounded-sm"
               />
+              {errors.email && (
+                <span className="text-red-500">이메일을 입력해주세요.</span>
+              )}
 
               <label
                 htmlFor="password"
@@ -118,7 +120,9 @@ export default function Home() {
                 type="password"
                 className="border-2 border-gray-300 rounded-sm "
               />
-              {errors.password && <span>비밀번호</span>}
+              {errors.password && (
+                <span className="text-red-500">비밀번호을 입력해주세요</span>
+              )}
 
               <div className="flex justify-between mt-6">
                 <button

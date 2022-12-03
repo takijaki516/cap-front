@@ -64,16 +64,25 @@ const RegisterPage = () => {
             className="flex-col flex justify-center"
           >
             <label
-              htmlFor="email"
+              htmlFor="text"
               className="block text-sm font-semibold text-gray-800"
             >
               이메일
             </label>
             <input
-              type="email"
-              {...register("email", { required: true })}
+              type="text"
+              {...register("email", {
+                required: "이메일이 필요합니다.",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "올바르지 않은 이메일 형식입니다.",
+                },
+              })}
               className="border-2 border-gray-300 rounded-sm"
             />
+            {errors.email && (
+              <span className="text-red-500">{errors.email.message}</span>
+            )}
 
             <label
               htmlFor="username"
@@ -86,7 +95,9 @@ const RegisterPage = () => {
               {...register("username", { required: true })}
               className="border-2 border-gray-300 rounded-sm"
             />
-            {errors.username && <span>유저네임</span>}
+            {errors.username && (
+              <span className="text-red-500">닉네임 입력해주세요</span>
+            )}
 
             <label
               htmlFor="password"
@@ -99,7 +110,9 @@ const RegisterPage = () => {
               type="password"
               className="border-2 border-gray-300 rounded-sm "
             />
-            {errors.password && <span>비밀번호</span>}
+            {errors.password && (
+              <span className="text-red-500">비밀번호를 입력해주세요</span>
+            )}
 
             <div className="flex justify-between mt-6">
               <button

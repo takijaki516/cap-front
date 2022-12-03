@@ -78,10 +78,11 @@ const SingleBoard = ({ data }) => {
         router.push("/homepage");
       }
     } catch (err) {
-      setUserEmail("");
-      localStorage.removeItem("auth");
-      router.push("/");
-      return;
+      console.log("error from delete", err);
+      // setUserEmail("");
+      // localStorage.removeItem("auth");
+      // router.push("/");
+      // return;
     }
   };
 
