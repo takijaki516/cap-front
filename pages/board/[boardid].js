@@ -50,6 +50,7 @@ const SingleBoardPage = () => {
         </Head>
 
         <Header />
+
         <div className="w-5/6 mx-auto">
           <SingleBoard data={data.data.data} />
           {/*  쪽지 receiver email을 알지 못한다. */}

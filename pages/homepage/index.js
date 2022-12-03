@@ -63,7 +63,11 @@ const HomePage = () => {
           {data.data.data.map((post) => (
             <Link key={post.board_id} href={`/board/${post.board_id}`}>
               <div className="cursor-pointer hover:opacity-80 duration-300">
-                <Card imgUrl={post.image} title={post.title} />
+                <Card
+                  boardStatus={post.status}
+                  imgUrl={post.imageReturnFormList[0]}
+                  title={post.title}
+                />
               </div>
             </Link>
           ))}

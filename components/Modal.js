@@ -3,11 +3,15 @@ import { useForm } from "react-hook-form";
 import Axios from "axios";
 
 import { useModalState } from "../context/modalContext";
+import { useAuthState } from "../context/auth";
 
+// 상세 item에서 들어오면 board가 true
+// chatlist에서 들어오면 messageItem이 true
 const Modal = ({ board, messageItem }) => {
   const [token, setToken] = useState("");
   const { modalState, setModalState } = useModalState();
   const { register, handleSubmit, reset } = useForm();
+  const { setUserEmail } = useAuthState();
 
   // token 확인
   useEffect(() => {
@@ -20,7 +24,6 @@ const Modal = ({ board, messageItem }) => {
     }
   }, []);
 
-  // TODO: 토큰 에러 처리해야 됨
   const onSubmit = async (data, e) => {
     let reqBody;
     if (!!messageItem) {
@@ -54,15 +57,15 @@ const Modal = ({ board, messageItem }) => {
         }
       );
 
-      console.log("modal 에서 res 보는 console.log", res);
-
       if (res.data.result === "success") {
         reset();
-      } else {
-        alert("다시 로그인 해주세요");
       }
     } catch (err) {
-      console.log(err);
+      setModalState(false);
+      setUserEmail("");
+      localStorage.removeItem("auth");
+      router.push("/");
+      return;
     } finally {
       reset();
       setModalState(false);
@@ -80,10 +83,10 @@ const Modal = ({ board, messageItem }) => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">쪽지 보내기</h3>
-                  {/* 쪽지 제목 (클라이언트에서 고정해줄것임 RE를 붙여서) */}
+                  {/* 쪽지제목 구현 */}
                   <div className="flex items-center self-end">
                     <input
-                      className="ml-2 inline-block w-48 outline-none 
+                      className="ml-2 inline-block min-w-fit outline-none 
                     bg-slate-50 p-2 text-xl placeholder-black"
                       placeholder={
                         !!board
@@ -124,7 +127,7 @@ const Modal = ({ board, messageItem }) => {
               </div>
             </div>
           </div>
-          <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
+          <div className="opacity-20 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
     </>

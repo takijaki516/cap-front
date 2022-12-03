@@ -3,15 +3,37 @@ import Image from "next/image";
 import Moment from "react-moment";
 import "moment/locale/ko";
 import Axios from "axios";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { useAuthState } from "../context/auth";
 
 const TableItem = ({ item }) => {
   const [token, setToken] = useState("");
+  const { setUserEmail } = useAuthState();
 
   const queryClient = useQueryClient();
 
-  //TODO: token 처리
+  let imgSrc;
+  if (!!item.imageReturnFormList[0]) {
+    imgSrc = `data:image/png;base64,${item.imageReturnFormList[0].image}`;
+  } else {
+    imgSrc = "/no_image.jpg";
+  }
+
+  let commaPrice = [];
+  let counter = 0;
+  for (let i = item.price.length - 1; i >= 0; i--) {
+    counter++;
+    if (counter === 3) {
+      commaPrice.unshift(",");
+      counter = 0;
+    }
+    commaPrice.unshift(item.price[i]);
+  }
+
+  console.log("item price", item.price);
+  console.log("comma ", commaPrice);
+
   const statusMutation = useMutation({
     mutationFn: async (type) => {
       const url = `http://110.12.218.147:8080/api/v1/board/status?board_id=${item.board_id}&status=${type}`;
@@ -27,10 +49,11 @@ const TableItem = ({ item }) => {
             },
           }
         );
-
-        console.log("mutation succeed", res);
       } catch (err) {
-        console.log(err);
+        setUserEmail("");
+        localStorage.removeItem("auth");
+        router.push("/");
+        return;
       }
     },
     onSuccess: () => {
@@ -38,7 +61,6 @@ const TableItem = ({ item }) => {
     },
   });
 
-  // TODO: token 에러 처리하기 (그냥 axios에서 처리 하는게 더 좋을꺼 같다.)
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const url = `http://110.12.218.147:8080/api/v1/board/delete?board_id=${item.board_id}`;
@@ -57,13 +79,12 @@ const TableItem = ({ item }) => {
 
         if (res.data.result === "success") {
           router.push("/homepage");
-        } else {
-          alert("다시 로그인 해주세요");
         }
       } catch (err) {
-        console.log(err);
-      } finally {
-        console.log("success");
+        setUserEmail("");
+        localStorage.removeItem("auth");
+        router.push("/");
+        return;
       }
     },
     onSuccess: () => {
@@ -110,12 +131,13 @@ const TableItem = ({ item }) => {
     <tr className="text-gray-700">
       <td className="px-4 py-3 border">
         <div className="flex items-center text-sm">
-          <div className="relative w-8 h-8 mr-3 rounded-full md:block">
+          <div className="relative w-12 h-12 mr-3  md:block">
             <Image
-              className="object-cover w-full h-full rounded-full"
-              src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+              className="object-cover w-full h-full  rounded-lg"
+              src={imgSrc}
               alt="product"
               loading="lazy"
+              layout="fill"
             />
           </div>
           <div>

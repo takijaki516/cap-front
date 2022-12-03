@@ -10,13 +10,20 @@ import { useAuthState } from "../context/auth";
 
 const SingleBoard = ({ data }) => {
   const { setModalState } = useModalState();
-  const { userEmail } = useAuthState();
+  const { userEmail, setUserEmail } = useAuthState();
   const router = useRouter();
   const [token, setToken] = useState("");
 
   const msgBtnHandler = (e) => {
     setModalState(true);
   };
+
+  let imgSrc;
+  if (!!data.imageReturnFormList[0]) {
+    imgSrc = `data:image/png;base64,${data.imageReturnFormList[0].image}`;
+  } else {
+    imgSrc = "/no_image.jpg";
+  }
 
   const statusTypeText = (type) => {
     if (type === "0") {
@@ -53,7 +60,6 @@ const SingleBoard = ({ data }) => {
 
   const url = `http://110.12.218.147:8080/api/v1/board/delete?board_id=${data.board_id}`;
 
-  // TODO: token 에러 처리하기 (그냥 axios에서 처리 하는게 더 좋을꺼 같다.)
   const deleteBtnHandler = async (data) => {
     try {
       const res = await Axios.post(
@@ -70,22 +76,26 @@ const SingleBoard = ({ data }) => {
 
       if (res.data.result === "success") {
         router.push("/homepage");
-      } else {
-        alert("다시 로그인 해주세요");
       }
     } catch (err) {
-      console.log(err);
-    } finally {
-      console.log("success");
+      setUserEmail("");
+      localStorage.removeItem("auth");
+      router.push("/");
+      return;
     }
   };
 
   return (
     <div className="flex justify-around mt-10 space-y-4">
       {/* image */}
-      <div className="basis-1/3">
-        {/* TODO: image logic */}
-        <Image src="/no_image.jpg" alt="main product" />
+      <div className="basis-1/3 relative h-[32rem]">
+        <Image
+          src={imgSrc}
+          alt="main product"
+          layout="fixed"
+          width={512}
+          height={512}
+        />
       </div>
 
       {/* left */}
@@ -98,8 +108,11 @@ const SingleBoard = ({ data }) => {
         </div>
 
         <div className="flex justify-end space-x-8 mx-4 my-1 items-center ">
-          <div className={`${statusTypeCSS(data.status)} p-1 rounded`}>
-            <span className="text-sm font-medium text-gray-600">상태: </span>
+          <div
+            className={`${statusTypeCSS(
+              data.status
+            )} p-1 px-2 rounded font-bold`}
+          >
             {statusTypeText(data.status)}
           </div>
           <div className="text-gray-600">

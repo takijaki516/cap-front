@@ -10,7 +10,7 @@ import Dropdown from "./Dropdown";
 function Header() {
   return (
     <header
-      className="sticky top-0 z-40  dark:bg-[#1D2226]
+      className="sticky top-0 z-50  dark:bg-[#1D2226]
     flex items-cneter justify-around  px-3 focus-within:shadow-lg"
     >
       {/* left */}

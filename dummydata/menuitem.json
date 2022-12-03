@@ -1,35 +1,42 @@
 [
   {
     "main_name": "의류/잡화/뷰티",
+    "cate_id": "0100",
     "item": [
-      { "item_name": "여성의류", "cate_id": "0001" },
-      { "item_name": "남성의류", "cate_id": "0002" },
-      { "item_name": "신발", "cate_id": "0003" },
-      { "item_name": "가방", "cate_id": "0004" },
-      { "item_name": "쥬얼리", "cate_id": "0005" },
-      { "item_name": "시계", "cate_id": "0006" }
+      { "item_name": "여성의류", "cate_id": "0101" },
+      { "item_name": "남성의류", "cate_id": "0102" },
+      { "item_name": "신발", "cate_id": "0103" },
+      { "item_name": "가방", "cate_id": "0104" },
+      { "item_name": "쥬얼리", "cate_id": "0105" },
+      { "item_name": "시계", "cate_id": "0106" }
     ]
   },
   {
     "main_name": "컴퓨터/디지털/가전",
+    "cate_id": "0200",
+
     "item": [
-      { "item_name": "노트북&PC", "cate_id": "0007" },
-      { "item_name": "PC주변장치", "cate_id": "0008" }
+      { "item_name": "노트북&PC", "cate_id": "0201" },
+      { "item_name": "PC주변장치", "cate_id": "0202" }
     ]
   },
   {
     "main_name": "유아",
+    "cate_id": "0300",
+
     "item": [
-      { "item_name": "장남감", "cate_id": "0009" },
-      { "item_name": "아동의류", "cate_id": "0010" }
+      { "item_name": "장남감", "cate_id": "0301" },
+      { "item_name": "아동의류", "cate_id": "0302" }
     ]
   },
   {
     "main_name": "홈테코/취미/반려/문구",
+    "cate_id": "0400",
+
     "item": [
-      { "item_name": "조명", "cate_id": "0011" },
-      { "item_name": "악기", "cate_id": "0012" },
-      { "item_name": "문구", "cate_id": "0013" }
+      { "item_name": "조명", "cate_id": "0401" },
+      { "item_name": "악기", "cate_id": "0402" },
+      { "item_name": "문구", "cate_id": "0403" }
     ]
   }
 ]

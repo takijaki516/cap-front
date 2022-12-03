@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 function Form() {
   const router = useRouter();
   const { register, watch, handleSubmit, control, reset } = useForm();
+  const [token, setToken] = useState("");
+
   const [pic, setPic] = useState("");
 
-  const [token, setToken] = useState("");
   // token 확인
   useEffect(() => {
     const storageData = localStorage.getItem("auth");
@@ -21,25 +22,35 @@ function Form() {
     }
   }, []);
 
-  const onSubmit = async (data) => {
-    const reqBody = {
-      category_id: data.cate.value,
-      title: data.title,
-      text: data.text,
-      price: data.price,
-    };
+  const formData = new FormData();
 
-    console.log(reqBody);
+  const onImgChange = (e) => {
+    const imgSrc = e.target.files[0];
+    formData.append("imageList", imgSrc);
+  };
+
+  const onSubmit = async (data) => {
+    // const reqBody = {
+    //   category_id: data.cate.value,
+    //   title: data.title,
+    //   text: data.text,
+    //   price: data.price,
+    // };
+
+    formData.append("category_id", data.cate.value);
+    formData.append("title", data.title);
+    formData.append("text", data.text);
+    formData.append("price", data.price);
 
     try {
       const res = await Axios.post(
         "http://110.12.218.147:8080/api/v1/board/add",
-        reqBody,
+        formData,
         {
           withCredentials: true,
           headers: {
             Authorization: token,
-            "Content-Type": "application/json",
+            // "Content-Type": "application/json",
           },
         }
       );
@@ -58,15 +69,6 @@ function Form() {
       reset();
     }
   };
-
-  // 이미지는 어떻게 하지??
-  // useEffect(() => {
-  //   if (watchImageUpload && watchImageUpload.length > 0) {
-  //     const file = watchImageUpload[0];
-  //     setPic(URL.createObjectURL(file));
-  //   }
-  // }, [watchImageUpload]);
-  // console.log("useEffect 밖에 있는 image 관련", watchImageUpload);
 
   return (
     <div className="w-10/12">
@@ -99,19 +101,19 @@ function Form() {
                 isClearable
                 {...field}
                 options={[
-                  { value: "0001", label: "여성의류" },
-                  { value: "0002", label: "남성의류" },
-                  { value: "0003", label: "신발" },
-                  { value: "0004", label: "가방" },
-                  { value: "0005", label: "쥬얼리" },
-                  { value: "0006", label: "시계" },
-                  { value: "0007", label: "노트북&PC" },
-                  { value: "0008", label: "PC주변장치" },
-                  { value: "0009", label: "장남감" },
-                  { value: "0010", label: "아동의류" },
-                  { value: "0011", label: "조명" },
-                  { value: "0012", label: "악기" },
-                  { value: "0013", label: "문구" },
+                  { value: "0101", label: "여성의류" },
+                  { value: "0102", label: "남성의류" },
+                  { value: "0103", label: "신발" },
+                  { value: "0104", label: "가방" },
+                  { value: "0105", label: "쥬얼리" },
+                  { value: "0106", label: "시계" },
+                  { value: "0201", label: "노트북&PC" },
+                  { value: "0202", label: "PC주변장치" },
+                  { value: "0301", label: "장남감" },
+                  { value: "0302", label: "아동의류" },
+                  { value: "0401", label: "조명" },
+                  { value: "0402", label: "악기" },
+                  { value: "0403", label: "문구" },
                 ]}
               />
             )}
@@ -131,15 +133,22 @@ function Form() {
         </div>
 
         {/* image 업로드  */}
-        {/* <div className="flex flex-col w-full space-y-2">
-          {pic ? (
+        <div className="flex flex-col w-full space-y-2">
+          {/* 업로드된 image */}
+          {/* {pic ? (
             <img src={pic} className="h-14 w-14 bg-slate-500" />
           ) : (
             <div className="h-14 w-14  bg-slate-500" />
-          )}
+          )} */}
           <label className="text-lg font-bold">이미지</label>
-          <input type="file" {...register("file")} />
-        </div> */}
+          {/* 이미지 포맷형식? */}
+          <input
+            type="file"
+            accept="image/png,image/jpg,image/jpeg"
+            name="board_image"
+            onChange={onImgChange}
+          />
+        </div>
 
         <div className="flex flex-col w-full space-y-2">
           <label className="text-lg font-bold" htmlFor="price">

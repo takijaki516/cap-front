@@ -2,11 +2,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
+
 import { useAuthState } from "../../context/auth";
 
 const RegisterPage = () => {
   const router = useRouter();
-  const { userEmail, useEmailFetch } = useAuthState();
+  const { userEmail, setUserEmail, useEmailFetch } = useAuthState();
 
   const {
     register,
@@ -34,10 +35,12 @@ const RegisterPage = () => {
           password: data.password,
         }
       );
-      console.log(res.data);
       router.push("/");
     } catch (err) {
-      console.log(err);
+      setUserEmail("");
+      localStorage.removeItem("auth");
+      router.push("/");
+      return;
     } finally {
       reset();
     }

@@ -12,9 +12,11 @@ const Dropdown = () => {
         {cateItems.map((itemLevelOne) => {
           return (
             <li className="dropdown" key={itemLevelOne.main_name}>
-              <div className="rounded bg-gray-200 hover:bg-gray-400 py-2 px-4 block w-40  whitespace-no-wrap">
-                {itemLevelOne.main_name}
-              </div>
+              <Link href={`/homepage/cate/${itemLevelOne.cate_id}`}>
+                <div className="rounded bg-gray-200 hover:bg-gray-400 py-2 px-4 block w-40  whitespace-no-wrap cursor-pointer">
+                  {itemLevelOne.main_name}
+                </div>
+              </Link>
 
               <ul className="dropdown-content absolute hidden text-gray-700 left-40 -mt-16">
                 {itemLevelOne.item.map((itemLevelTwo) => {
@@ -33,33 +35,6 @@ const Dropdown = () => {
           );
         })}
       </ul>
-
-      {/* 드랍다운 */}
-      {/* <ul className="dropdown-content hidden absolute w-full  text-gray-700 pt-1">
-        {cateItems.map((itemLevelOne) => {
-          return (
-            <li className="dropdown" key={itemLevelOne.main_name}>
-              <div className="rounded bg-gray-200 hover:bg-gray-400 py-2 px-4 block w-40  whitespace-no-wrap">
-                {itemLevelOne.main_name}
-              </div>
-
-              <ul className="dropdown-content absolute hidden text-gray-700 left-40 -mt-16">
-                {itemLevelOne.item.map((itemLevelTwo) => {
-                  return (
-                    <li className="cursor-pointer" key={itemLevelTwo.item_name}>
-                      <Link href={`/homepage/cate/${itemLevelTwo.item_name}`}>
-                        <div className="bg-gray-200 hover:bg-gray-400 py-2 px-4 block w-40 whitespace-no-wrap">
-                          {itemLevelTwo.item_name}
-                        </div>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </li>
-          );
-        })}
-      </ul> */}
     </div>
   );
 };
