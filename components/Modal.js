@@ -11,9 +11,16 @@ import { useAuthState } from "../context/auth";
 const Modal = ({ board, messageItem }) => {
   const [token, setToken] = useState("");
   const { modalState, setModalState } = useModalState();
-  const { register, handleSubmit, reset } = useForm();
   const { setUserEmail } = useAuthState();
   const router = useRouter();
+
+  // FIXME쪽지내용: 여기 formstate추가
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   // token 확인
   useEffect(() => {
@@ -91,7 +98,7 @@ const Modal = ({ board, messageItem }) => {
                   {/* 쪽지제목 구현 */}
                   <div className="flex items-center self-end">
                     <input
-                      className="ml-2 inline-block min-w-fit outline-none 
+                      className="ml-2 inline-block w-80 outline-none 
                     bg-slate-50 p-2 text-xl placeholder-black"
                       placeholder={
                         !!board
@@ -103,12 +110,19 @@ const Modal = ({ board, messageItem }) => {
                   </div>
                 </div>
                 {/*body*/}
+                {/* FIXME쪽지내용: required 옵션 추가 */}
                 <div className="relative px-6 py-4 bg-slate-50">
                   <textarea
                     className="h-52 w-full  outline-none bg-slate-50"
                     placeholder="본문"
-                    {...register("text")}
+                    {...register("text", { required: true })}
                   ></textarea>
+                  {/* FIXME쪽지내용: error message 추가 */}
+                  {errors.text && (
+                    <span className="text-red-500">
+                      쪽지 내용을 입력해주세요
+                    </span>
+                  )}
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
